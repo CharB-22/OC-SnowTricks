@@ -12,9 +12,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    /**
-     * @Route("/tricks", name="tricks")
-     */
+
     public function getTrickList(): Response
     {
         $trickList = $this->getDoctrine()
@@ -24,6 +22,16 @@ class TricksController extends AbstractController
         return $this->render('tricks/home.html.twig', [
             'title' => 'Home',
             'trickList' => $trickList
+        ]);
+    }
+
+    /**
+     * @Route("/tricks&{id}", name="trick_details", methods={"GET"})
+     */
+    public function getTrick(Trick $trick) : Response
+    {
+        return $this->render('tricks/trick_details.html.twig', [
+            'trick' => $trick
         ]);
     }
 }

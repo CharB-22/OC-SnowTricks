@@ -6,9 +6,9 @@
     <h1> {{ trick.trickName }} </h1>
     <p>{{ trick.trickDescription }}</p>
     <div>
-        <span class="badge bg-primary">Créé le :</span>
-        <span class="badge bg-warning">Modifié le :</span>
-        <span class="badge bg-success">Success</span>
+        <span class="badge bg-primary">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
+        <span class="badge bg-warning">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
+        <span class="badge bg-success">{{ trick.trickGroup.groupName }}</span>
         <span class="badge bg-danger">Danger</span>
         <span class="badge bg-secondary">Warning</span>
     </div>

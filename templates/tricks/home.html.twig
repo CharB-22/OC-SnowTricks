@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <img src="https://cdn.pixabay.com/photo/2015/03/26/10/01/man-690779_1280.jpg" class="d-block w-100" alt="...">
+    <div class="row">
+        {% for trick in trickList %}
+        <div class="col-lg-3 col-xs-12">
+            <div class="card-body">
+                <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
+                <div class="card-footer">
+                    <a href="{{ path('trick_details',{'id': trick.id}) }}" >{{ trick.trickName }}</a>
+                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Trick;
+use App\Entity\TrickGroup;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,9 +20,10 @@ class TrickType extends AbstractType
             ->add('trickDescription', null, [
                 'required' => false,
             ])
-            /*->add('createdAt')
-            ->add('modifiedAt')
-            ->add('trickGroup')*/
+            ->add('trickGroup', EntityType::class, [
+                'class' => TrickGroup::class,
+                'choice_label' => 'groupName'
+            ])
         ;
     }
 

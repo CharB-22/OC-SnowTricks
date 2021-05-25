@@ -40,36 +40,6 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/create_trick_test", name="create_trick_test", methods={"GET", "POST"})
-     */
-    public function createTrickTest(Request $request, Trick $newTrick) : Response
-    {
-        $newTrick = new Trick();
-
-        $form = $this->createFormBuilder($newTrick)
-            ->add('trickName')
-            ->add('trickDescription', TextareaType::class)
-            ->getForm();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $newTrick->setCreatedAt(new \DateTime());
-            $newTrick->setModifiedAt(new \DateTime());
-
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($newTrick);
-            $manager->flush();
-
-            return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
-        }
-
-        return $this->render('tricks/create_trick.html.twig', [
-            'title' => 'Créer un trick',
-            'formTrick' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/create_trick", name="create_trick", methods={"GET", "POST"})
      * @Route("/{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
      */
@@ -101,7 +71,7 @@ class TricksController extends AbstractController
             return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
         }
 
-        return $this->render('tricks/create_trick.html.twig', [
+        return $this->render('tricks/trick_form.html.twig', [
             'formTrick' => $form->createView(),
             'editMode' => $newTrick->getId() !== null
         ]);

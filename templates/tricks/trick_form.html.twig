@@ -15,10 +15,11 @@
     {% else %}
     <h1> Créer un nouveau trick </h1>
     {% endif %}
-    {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}})}}
+    {{ form_start(formTrick) }}
     <form action="" method="post">
         {{ form_row(formTrick.trickName, {'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
         {{ form_row(formTrick.trickDescription, {'attr': {'placeholder': 'Renseignez la description du trick'}})}}
+        {{ form_row(formTrick.trickGroup)}}
 
             <div class="form-group">
                 <label for="formFile" class="form-label mt-4">Default file input example</label>

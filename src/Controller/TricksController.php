@@ -30,7 +30,7 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks&{id}", name="trick_details", methods={"GET"})
+     * @Route("/tricks/{id}", name="trick_details", methods={"GET"})
      */
     public function getTrick(Trick $trick) : Response
     {
@@ -71,22 +71,32 @@ class TricksController extends AbstractController
 
     /**
      * @Route("/create_trick", name="create_trick", methods={"GET", "POST"})
+     * @Route("/{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
      */
-    public function createTrick(Request $request): Response
+    public function manageTrickForm(Trick $newTrick = null, Request $request): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $newTrick = new Trick();
+        if (!$newTrick)
+        {
+            $newTrick = new Trick();
+        }  
+
         $form = $this->createFormBuilder($newTrick, ['csrf_protection' => false])
             ->add('trickName')
             ->add('trickDescription', TextareaType::class)
             ->getForm();
         
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $newTrick->setModifiedAt(new \DateTime())
-                    ->setCreatedAt(new \DateTime());
+            if(!$newTrick->getId())
+            {
+                $newTrick->setCreatedAt(new \DateTime()); 
+            }
+
+            $newTrick->setModifiedAt(new \DateTime());   
 
             $entityManager->persist($newTrick);
             $entityManager->flush();

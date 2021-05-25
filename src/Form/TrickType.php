@@ -14,7 +14,7 @@ class TrickType extends AbstractType
         $builder
             ->add('trickName', null, [
                 'required' => false,
-            ])
+            ]) 
             ->add('trickDescription', null, [
                 'required' => false,
             ])

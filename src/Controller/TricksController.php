@@ -106,4 +106,22 @@ class TricksController extends AbstractController
             'editMode' => $newTrick->getId() !== null
         ]);
     }
+
+    /**
+     * @Route("/{id}/delete", name="delete_trick", methods={"GET","POST"})
+     */
+    public function deleteTrick(Request $request, Trick $trick): Response
+    {
+        /*if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }*/
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($trick);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+    }
 }

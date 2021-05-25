@@ -15,7 +15,7 @@
     {% else %}
     <h1> Créer un nouveau trick </h1>
     {% endif %}
-    {{ form_start(formTrick)}}
+    {{ form_start(formTrick, {'attr': {'novalidate': 'novalidate'}})}}
     <form action="" method="post">
         {{ form_row(formTrick.trickName, {'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
         {{ form_row(formTrick.trickDescription, {'attr': {'placeholder': 'Renseignez la description du trick'}})}}

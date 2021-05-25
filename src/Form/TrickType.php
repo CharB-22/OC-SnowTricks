@@ -12,8 +12,12 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('trickName')
-            ->add('trickDescription')
+            ->add('trickName', null, [
+                'required' => false,
+            ])
+            ->add('trickDescription', null, [
+                'required' => false,
+            ])
             /*->add('createdAt')
             ->add('modifiedAt')
             ->add('trickGroup')*/

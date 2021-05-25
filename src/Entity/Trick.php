@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrickRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -19,11 +20,19 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message = "Vous devez remplir ce champs.")
+     * @Assert\Length(min= 10, 
+     *                max=255, 
+     *                minMessage = "Le titre doit avoir au moins 10 charactères.",
+     *                maxMessage = "Le titre ne doit pas dépasser 255 charactères.")
      */
     private $trickName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message = "Vous devez remplir ce champs.")
+     * @Assert\Length(min= 10,
+     *                minMessage = "La description doit comporter plus de 10 charactères.")
      */
     private $trickDescription;
 

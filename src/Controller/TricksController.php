@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Trick;
-use App\Entity\TrickGroup;
+use App\Form\TrickType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class TricksController extends AbstractController
 {
@@ -81,12 +81,9 @@ class TricksController extends AbstractController
         {
             $newTrick = new Trick();
         }  
-
-        $form = $this->createFormBuilder($newTrick, ['csrf_protection' => false])
-            ->add('trickName')
-            ->add('trickDescription', TextareaType::class)
-            ->getForm();
         
+        $form = $this->createForm(TrickType::class, $newTrick, ['csrf_protection' => false]);
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -105,8 +102,8 @@ class TricksController extends AbstractController
         }
 
         return $this->render('tricks/create_trick.html.twig', [
-            'title' => 'Créer un trick',
             'formTrick' => $form->createView(),
+            'editMode' => $newTrick->getId() !== null
         ]);
     }
 }

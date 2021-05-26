@@ -11,8 +11,8 @@
                 <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
                 <div class="card-footer">
                     <a href="{{ path('trick_details',{'id': trick.id}) }}" >{{ trick.trickName }}</a>
-                    <i class="fas fa-edit"></i>
-                    <i class="fas fa-trash-alt"></i>
+                    <a href="{{ path('edit_trick',{'id': trick.id}) }}"><i class="fas fa-edit"></i></a>
+                    <a href="{{ path('delete_trick',{'id': trick.id}) }}"><i class="fas fa-trash-alt"></i></a>
                 </div>
             </div>
         </div>

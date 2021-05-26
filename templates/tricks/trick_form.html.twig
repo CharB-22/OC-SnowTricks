@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% form_theme formTrick with 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}
+    {% if editMode %}
+    Modifier le trick
+    {% else %}
+    Créer un nouveau trick
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if editMode %}
+    <h1> Modifier le trick </h1>
+    {% else %}
+    <h1> Créer un nouveau trick </h1>
+    {% endif %}
+    {{ form_start(formTrick) }}
+    <form action="" method="post">
+        {{ form_row(formTrick.trickName, {'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
+        {{ form_row(formTrick.trickDescription, {'attr': {'placeholder': 'Renseignez la description du trick'}})}}
+        {{ form_row(formTrick.trickGroup)}}
+
+            <div class="form-group">
+                <label for="formFile" class="form-label mt-4">Default file input example</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+            {% if editMode %}
+                <button type="submit" class="btn btn-primary">Enregister les modifications</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary">Créer</button>
+            {% endif %}
+    </form>
+    {{ form_end(formTrick)}}
+{% endblock %}

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Trick;
+use App\Entity\Comment;
 use App\Form\TrickType;
+use App\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,15 +33,33 @@ class TricksController extends AbstractController
 
 
     /**
-     * @Route("/tricks/{id}", name="trick_details", methods={"GET"})
+     * @Route("/tricks/{id}", name="trick_details", methods={"GET", "POST"})
      */
-    public function getTrick(Trick $trick) : Response
+    public function getTrick(Trick $trick, Request $request) : Response
     {
+        $newComment = new Comment;
+        
+        $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $newComment->setCommentDate(new \DateTime());
+            $newComment->setTrick($trick);
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($newComment);
+            $entityManager->flush();
+            
+        } 
+
         $trickComments = $trick->getComments();
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
-            'comments' => $trickComments
+            'formComment' => $form->createView(),
+            'comments' => $trickComments,
         ]);
     }
 

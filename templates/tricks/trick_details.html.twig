@@ -12,10 +12,16 @@
         <span class="badge bg-danger">Danger</span>
         <span class="badge bg-secondary">Warning</span>
     </div>
-    {% for comment in comments%}
+    <div class="container">
+        {{ form_start(formComment) }}
+            {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
+            <button type="submit" class="btn btn-warning">Envoyer</button>
+        {{ form_end(formComment) }}
+        {% for comment in comments%}
         <div class="card">
             <p class="text-secondary">{{ comment.commentDate | date('d/m/Y')}}</p>
             <p>{{ comment.commentContent }}</p>
         </div>
-    {% endfor %} 
+        {% endfor %} 
+    </div>
 {% endblock %}

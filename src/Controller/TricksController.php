@@ -29,15 +29,21 @@ class TricksController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/tricks/{id}", name="trick_details", methods={"GET"})
      */
     public function getTrick(Trick $trick) : Response
     {
+        $trickComments = $trick->getComments();
+
         return $this->render('tricks/trick_details.html.twig', [
-            'trick' => $trick
+            'trick' => $trick,
+            'comments' => $trickComments
         ]);
     }
+
+
 
     /**
      * @Route("/create_trick", name="create_trick", methods={"GET", "POST"})

@@ -120,4 +120,18 @@ class TricksController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
+
+    /**
+     * @Route("/tricks/{id}/delete_comment/{commentId}", name="delete_comment", methods={"GET","POST"})
+     */
+    public function deleteComment(Comment $comment, Trick $trick) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($comment->getId());
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+
+    }
 }

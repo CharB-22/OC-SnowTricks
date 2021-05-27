@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Trick;
+use App\Entity\Comment;
 use App\Form\TrickType;
+use App\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,15 +31,39 @@ class TricksController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/tricks/{id}", name="trick_details", methods={"GET"})
+     * @Route("/tricks/{id}", name="trick_details", methods={"GET", "POST"})
      */
-    public function getTrick(Trick $trick) : Response
+    public function getTrick(Trick $trick, Request $request) : Response
     {
+        $newComment = new Comment;
+        
+        $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $newComment->setCommentDate(new \DateTime());
+            $newComment->setTrick($trick);
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($newComment);
+            $entityManager->flush();
+            
+        } 
+
+        $trickComments = $trick->getComments();
+
         return $this->render('tricks/trick_details.html.twig', [
-            'trick' => $trick
+            'trick' => $trick,
+            'formComment' => $form->createView(),
+            'comments' => $trickComments,
         ]);
     }
+
+
 
     /**
      * @Route("/create_trick", name="create_trick", methods={"GET", "POST"})
@@ -93,5 +119,19 @@ class TricksController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/tricks/{id}/delete_comment/{commentId}", name="delete_comment", methods={"GET","POST"})
+     */
+    public function deleteComment(Comment $comment, Trick $trick) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($comment->getId());
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+
     }
 }

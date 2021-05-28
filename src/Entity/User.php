@@ -5,9 +5,15 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ * fields = {"username"},
+ * message = "Cet utilisateur existe déjà."
+ * )
  */
 class User implements UserInterface
 {
@@ -20,6 +26,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
+     * )
      */
     private $username;
 
@@ -31,9 +39,15 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min=8,
+     * minMessage="Votre mot de passe doit au moins faire 8 caractères.")
      */
     private $password;
 
+    /**
+     * @var string The hashed password
+     * @Assert\EqualTo(propertyPath = "password", message="Veuillez renseigner un mot de passe identique")
+     */
     private $confirmPassword;
 
     /**
@@ -43,6 +57,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="blob", nullable=true)
+     * @Assert\Image(
+     *     minWidth = 200,
+     *     maxWidth = 400,
+     *     maxWidthMessage = "Cette image est trop grande.",
+     *     minHeight = 200,
+     *     maxHeight = 400,
+     *     maxHeightMessage = "Cette image est trop grande."
+     *)
      */
     private $picture;
 

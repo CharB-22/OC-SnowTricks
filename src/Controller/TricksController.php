@@ -37,7 +37,7 @@ class TricksController extends AbstractController
      */
     public function getTrick(Trick $trick, Request $request) : Response
     {
-        $newComment = new Comment;
+        $newComment = new Comment();
         
         $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
 

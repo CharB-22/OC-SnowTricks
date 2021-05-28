@@ -18,7 +18,10 @@ class RegistrationType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('confirmPassword', PasswordType::class)
             ->add('email')
-            /*->add('picture', FileType::class )*/
+            ->add('profilePicture', FileType::class, [
+                'label' => false,
+                'mapped' => false
+            ] )
         ;
     }
 

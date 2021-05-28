@@ -2,15 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
-{
+{   
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/register", name="security_register")
+     */
+    public function register() : Response
+    {
+        $newUser = new User();
+
+        $form = $this->createForm(RegistrationType::class, $newUser);
+
+        return $this->render('security/security_register.html.twig', [
+            'title' => 'S\'inscrire',
+            'registrationForm' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/login", name="security_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

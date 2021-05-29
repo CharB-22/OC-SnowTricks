@@ -6,11 +6,10 @@
     <h1> {{ trick.trickName }} </h1>
     <p>{{ trick.trickDescription }}</p>
     <div>
-        <span class="badge bg-primary">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
-        <span class="badge bg-warning">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
-        <span class="badge bg-success"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
-        <span class="badge bg-danger">{{trick.user.username }}</span>
-        <span class="badge bg-secondary">Warning</span>
+        <span class="badge bg-primary">Auteur : {{trick.user.username }}</span>
+        <span class="badge bg-warning">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
+        <span class="badge bg-success">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
+        <span class="badge bg-danger"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
     </div>
     <div class="container">
         {% if app.user %}
@@ -20,11 +19,20 @@
         {{ form_end(formComment) }}
         {% endif %}
         {% for comment in comments%}
-        <div class="card">
-            <img src="{{ comment.user.profilePicture }}" />
-            <p class="text-secondary">{{ comment.commentDate | date('d/m/Y')}}</p>
-            <p>{{ comment.commentContent }}</p>
-            <a href="{{ path('delete_comment', {'id': trick.id, 'commentId' : comment.id })}}"><i class="fas fa-trash-alt"></i></a>
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-1">
+                    <img  class="card-img" style="max-width: 50px;" src="{{ comment.user.profilePicture }}" alt="image profile de {{comment.user.username}}"/>
+                </div>
+                <div class="col-md-11">
+                    <div class="card-body">
+                        <h5 class="card-title"><p class="text-secondary">{{ comment.user.username }}</p></h5>
+                        <p class="card-text"><small class="text-muted"><p class="text-secondary">Ecrit le : {{ comment.commentDate | date('d/m/Y')}}</p></small></p>
+                        <p class="card-text">{{ comment.commentContent }}</p>
+                        <a href="{{ path('delete_comment', {'id': trick.id, 'commentId' : comment.id })}}"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
         {% endfor %} 
     </div>

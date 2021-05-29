@@ -39,6 +39,7 @@ class TricksController extends AbstractController
     public function getTrick(Trick $trick, Request $request) : Response
     {
         $newComment = new Comment();
+        $user = $this->getUser();
         
         $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
 
@@ -48,6 +49,7 @@ class TricksController extends AbstractController
         {
             $newComment->setCommentDate(new \DateTime());
             $newComment->setTrick($trick);
+            $newComment->setUser($user);
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newComment);

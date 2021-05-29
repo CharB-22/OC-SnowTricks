@@ -57,9 +57,21 @@ class Trick
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $User;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick", orphanRemoval=true)
+     */
+    private $trickImages;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->trickImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,5 +172,47 @@ class Trick
     public function __toString()
     {
         return $this->trickName;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrickImage[]
+     */
+    public function getTrickImages(): Collection
+    {
+        return $this->trickImages;
+    }
+
+    public function addTrickImage(TrickImage $trickImage): self
+    {
+        if (!$this->trickImages->contains($trickImage)) {
+            $this->trickImages[] = $trickImage;
+            $trickImage->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrickImage(TrickImage $trickImage): self
+    {
+        if ($this->trickImages->removeElement($trickImage)) {
+            // set the owning side to null (unless already changed)
+            if ($trickImage->getTrick() === $this) {
+                $trickImage->setTrick(null);
+            }
+        }
+
+        return $this;
     }
 }

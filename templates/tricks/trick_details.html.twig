@@ -9,17 +9,19 @@
         <span class="badge bg-primary">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
         <span class="badge bg-warning">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
         <span class="badge bg-success"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
-        <span class="badge bg-danger">Danger</span>
+        <span class="badge bg-danger">{{trick.user.username }}</span>
         <span class="badge bg-secondary">Warning</span>
     </div>
     <div class="container">
+        {% if app.user %}
         {{ form_start(formComment) }}
             {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
             <button type="submit" class="btn btn-warning">Envoyer</button>
         {{ form_end(formComment) }}
-
+        {% endif %}
         {% for comment in comments%}
         <div class="card">
+            <img src="{{ comment.user.profilePicture }}" />
             <p class="text-secondary">{{ comment.commentDate | date('d/m/Y')}}</p>
             <p>{{ comment.commentContent }}</p>
             <a href="{{ path('delete_comment', {'id': trick.id, 'commentId' : comment.id })}}"><i class="fas fa-trash-alt"></i></a>

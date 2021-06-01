@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -37,7 +38,8 @@ class TricksController extends AbstractController
      */
     public function getTrick(Trick $trick, Request $request) : Response
     {
-        $newComment = new Comment;
+        $newComment = new Comment();
+        $user = $this->getUser();
         
         $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
 
@@ -47,6 +49,7 @@ class TricksController extends AbstractController
         {
             $newComment->setCommentDate(new \DateTime());
             $newComment->setTrick($trick);
+            $newComment->setUser($user);
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newComment);
@@ -71,7 +74,8 @@ class TricksController extends AbstractController
      */
     public function manageTrickForm(Trick $newTrick = null, Request $request): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
 
         if (!$newTrick)
         {
@@ -88,9 +92,10 @@ class TricksController extends AbstractController
             {
                 $newTrick->setCreatedAt(new \DateTime()); 
             }
-
-            $newTrick->setModifiedAt(new \DateTime());   
-
+            $newTrick->setModifiedAt(new \DateTime());
+            $newTrick->setUser($user);
+            // On récupère les images transmises
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newTrick);
             $entityManager->flush();
 

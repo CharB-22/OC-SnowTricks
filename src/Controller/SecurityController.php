@@ -8,9 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {   
@@ -27,15 +30,35 @@ class SecurityController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $entityManager = $this->getDoctrine()->getManager();
 
             $hashPassword = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($hashPassword);
 
+            $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($newUser);
             $entityManager->flush();
 
-            return $this->redirectToRoute('security_login');
+            // On récupère les images transmises
+            $profilePicture = $form->get('profilePicture')->getData();
+
+            if ($profilePicture)
+            {
+                //On génère un nouveau nom de fichier
+                $imageFile = uniqid(). '.' . $profilePicture->getExtension();
+                
+                //On copie le fichier dans le dossier Upload
+                $profilePicture->move(
+                $this->getParameter('images_directory'),
+                $imageFile
+                );
+            
+                // On enregistre le nom de l'image dans la base de donnée
+                $newUser->setProfilePicture($imageFile);
+
+            }
+            
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('security/security_register.html.twig', [
             'title' => 'S\'inscrire',

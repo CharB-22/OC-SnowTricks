@@ -34,11 +34,6 @@ class SecurityController extends AbstractController
             $hashPassword = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($hashPassword);
 
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($newUser);
-            $entityManager->flush();
-
             // On récupère les images transmises
             $profilePicture = $form->get('profilePicture')->getData();
 
@@ -57,6 +52,11 @@ class SecurityController extends AbstractController
                 $newUser->setProfilePicture($imageFile);
 
             }
+            
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($newUser);
+            $entityManager->flush();
             
             return $this->redirectToRoute('app_login');
         }

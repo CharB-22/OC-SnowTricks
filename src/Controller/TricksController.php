@@ -71,11 +71,13 @@ class TricksController extends AbstractController
         } 
 
         $trickComments = $trick->getComments();
+        $trickImages = $trick->getTrickImages();
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
             'formComment' => $form->createView(),
             'comments' => $trickComments,
+            'trickImage' => $trickImages
         ]);
     }
 
@@ -171,4 +173,21 @@ class TricksController extends AbstractController
         return $this->redirectToRoute('home');
 
     }
+
+    /**
+     * @Route("/tricks/delete_image/{id}", name="delete_trickImage", methods={"POST", "GET"})
+     */
+    public function deleteTrickImage(Request $request, TrickImage $trickImage)
+    {
+        if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token'))) {
+            // Delete it from the uploads folder
+            $imageName = $trickImage->getMediaName();
+            unlink($this->getParameter('images_directory'). '/' . $imageName);
+            
+            // Delete it from the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($trickImage);
+            $entityManager->flush();
+        }
+    }    
 }

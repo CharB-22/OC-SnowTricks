@@ -113,28 +113,26 @@ class TricksController extends AbstractController
      */
     public function deleteTrick(Request $request, Trick $trick): Response
     {
-        /*if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($article);
+            $entityManager->remove($trick);
             $entityManager->flush();
-        }*/
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($trick);
-        $entityManager->flush();
+        }
 
         return $this->redirectToRoute('home');
     }
 
     /**
-     * @Route("/tricks/{id}/delete_comment/{commentId}", name="delete_comment", methods={"GET","POST"})
+     * @Route("/tricks/delete_comment/{id}", name="delete_comment", methods={"POST", "GET"})
      */
-    public function deleteComment(Comment $comment, Trick $trick) : Response
+    public function deleteComment(Comment $comment, Request $request) : Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $comment = $entityManager->getRepository(Comment::class)->find($comment->getId());
-        $entityManager->remove($comment);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
 
         return $this->redirectToRoute('home');
 

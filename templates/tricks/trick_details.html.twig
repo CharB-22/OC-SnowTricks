@@ -22,14 +22,17 @@
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="col-md-1">
-                    <img  class="card-img" style="max-width: 50px;" src="{{ comment.user.profilePicture }}" alt="image profile de {{comment.user.username}}"/>
+                    <img  class="card-img" style="max-width: 50px;" src="/public/uploads/{{ comment.user.profilePicture }}" alt="image profile de {{comment.user.username}}"/>
                 </div>
                 <div class="col-md-11">
                     <div class="card-body">
                         <h5 class="card-title"><p class="text-secondary">{{ comment.user.username }}</p></h5>
                         <p class="card-text"><small class="text-muted"><p class="text-secondary">Ecrit le : {{ comment.commentDate | date('d/m/Y')}}</p></small></p>
                         <p class="card-text">{{ comment.commentContent }}</p>
-                        <a href="{{ path('delete_comment', {'id': trick.id, 'commentId' : comment.id })}}"><i class="fas fa-trash-alt"></i></a>
+                        <form method="post" action="{{ path('delete_comment', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="btn"><i class="fas fa-trash-alt"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>

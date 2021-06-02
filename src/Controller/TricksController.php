@@ -4,10 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Entity\Comment;
-use App\Entity\User;
+use App\Entity\TrickImage;
 use App\Form\TrickType;
 use App\Form\CommentType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -92,9 +91,30 @@ class TricksController extends AbstractController
             {
                 $newTrick->setCreatedAt(new \DateTime()); 
             }
+
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
+
             // On récupère les images transmises
+            $trickImage = $form->get('trickImage')->getData();
+            // Boucle sur les images
+            foreach($trickImage as $image)
+            {
+                // New file name
+                $newImageName = md5(uniqid()) . '.' . $image->getExtension();
+
+                // Save file in the upload folder
+                $image->move(
+                    $this->getParameter('images_directory', $newImageName)
+                );
+
+                // Save the image name in the database
+                $trickImg = new TrickImage();
+                $trickImg->setMediaName($newImageName);
+                $newTrick->addTrickImage($trickImg);
+
+
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newTrick);
             $entityManager->flush();

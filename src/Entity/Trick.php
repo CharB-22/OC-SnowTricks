@@ -64,7 +64,7 @@ class Trick
     private $User;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="relation")
      */
     private $trickImages;
 
@@ -215,4 +215,6 @@ class Trick
 
         return $this;
     }
+
+
 }

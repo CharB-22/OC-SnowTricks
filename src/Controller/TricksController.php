@@ -117,7 +117,7 @@ class TricksController extends AbstractController
             foreach($trickImage as $image)
             {
                 // New file name
-                $newImageName = md5(uniqid()) . '.' . $image->getExtension();
+                $newImageName = uniqid() . '.' . $image->getExtension();
 
                 // Save file in the upload folder
                 $image->move(

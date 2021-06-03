@@ -24,7 +24,6 @@ class TrickImage
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickImages")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
 
@@ -56,4 +55,5 @@ class TrickImage
 
         return $this;
     }
+
 }

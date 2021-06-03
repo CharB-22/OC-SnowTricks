@@ -6,9 +6,9 @@
     <div class="container">   
         <div class="row">
             <div class="col-xs-3">
-                {% for trickImage in trickImage %}
+                {% for image in trickImage %}
                     <img
-                        src="{{ asset('/uploads/' ~ trickImage.mediaName ) }}"
+                        src="{{ asset('/uploads/' ~ image.mediaName ) }}"
                         alt="{{ trick.trickName }}"
                     />
                 {% endfor %}

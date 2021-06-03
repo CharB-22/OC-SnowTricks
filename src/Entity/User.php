@@ -58,19 +58,6 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
-     * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 400,
-     *     maxWidthMessage = "Cette image est trop grande.",
-     *     minHeight = 200,
-     *     maxHeight = 400,
-     *     maxHeightMessage = "Cette image est trop grande."
-     *)
-     */
-    private $picture;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $profilePicture;

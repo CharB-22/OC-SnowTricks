@@ -64,7 +64,7 @@ class Trick
     private $User;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="relation")
+     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick")
      */
     private $trickImages;
 

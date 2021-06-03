@@ -26,7 +26,6 @@ class TrickType extends AbstractType
                 'choice_label' => 'groupName'
             ])
             ->add('trickImage', FileType::class, [
-                'label' => false,
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false

@@ -112,23 +112,23 @@ class TricksController extends AbstractController
             $newTrick->setUser($user);
 
             // On récupère les images transmises
-            $trickImage = $form->get('trickImage')->getData();
+            $trickImages = $form->get('trickImage')->getData();
             // Boucle sur les images
-            foreach($trickImage as $image)
+            foreach ($trickImages as $trickImage)
             {
-                // New file name
-                $newImageName = uniqid() . '.' . $image->getExtension();
-
-                // Save file in the upload folder
-                $image->move(
-                    $this->getParameter('images_directory', $newImageName)
+                //On génère un nouveau nom de fichier
+                $imageFile = uniqid(). '.' . $trickImage->getExtension();
+                
+                //On copie le fichier dans le dossier Upload
+                $trickImage->move(
+                $this->getParameter('images_directory'),
+                $imageFile
                 );
 
                 // Save the image name in the database
                 $trickImg = new TrickImage();
-                $trickImg->setMediaName($newImageName);
+                $trickImg->setMediaName($imageFile);
                 $newTrick->addTrickImage($trickImg);
-
 
             }
             $entityManager = $this->getDoctrine()->getManager();

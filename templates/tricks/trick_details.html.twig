@@ -9,7 +9,7 @@
                 {% for image in trickImage %}
                     <img
                         src="{{ asset('/uploads/' ~ image.mediaName ) }}"
-                        alt="{{ trick.trickName }}"
+                        alt="{{ trick.trickName }} Image {{ image.id }}"
                     />
                 {% endfor %}
             </div>

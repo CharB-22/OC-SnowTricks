@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
             if ($profilePicture)
             {
                 //On génère un nouveau nom de fichier
-                $imageFile = uniqid(). '.' . $profilePicture->getExtension();
+                $imageFile = uniqid(). '.' . $profilePicture->guessExtension();
                 
                 //On copie le fichier dans le dossier Upload
                 $profilePicture->move(

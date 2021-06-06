@@ -40,21 +40,21 @@
         {{ form_end(formComment) }}
         {% endif %}
         {% for comment in comments%}
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-md-1">
-                    <img  class="card-img" style="max-width: 50px;" src="{{ asset('/uploads/' ~ comment.user.profilePicture ) }}"  alt="image profile de {{comment.user.username}}"/>
+        <div class="mb-3 d-flew card row">
+            <div class="d-flex align-items-center">
+                <div class="col-1">
+                    <img  class="img-fluid d-flex justify-content-center" style="max-width: 50px;" src="{{ asset('/uploads/' ~ comment.user.profilePicture ) }}"  alt="image profile de {{comment.user.username}}"/>
                 </div>
-                <div class="col-md-11">
-                    <div class="card-body">
-                        <h5 class="card-title"><p class="text-secondary">{{ comment.user.username }}</p></h5>
-                        <p class="card-text"><small class="text-muted"><p class="text-secondary">Ecrit le : {{ comment.commentDate | date('d/m/Y')}}</p></small></p>
-                        <p class="card-text">{{ comment.commentContent }}</p>
-                        <form method="post" action="{{ path('delete_comment', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
-                            <button class="btn"><i class="fas fa-trash-alt"></i></button>
-                        </form>
-                    </div>
+                <div class="col-10">
+                    <h5 class="card-title"><p class="text-secondary">{{ comment.user.username }}</p></h5>
+                    <p class="card-text"><small class="text-muted"><p class="text-secondary">Ecrit le : {{ comment.commentDate | date('d/m/Y')}}</p></small></p>
+                    <p class="card-text">{{ comment.commentContent }}</p>
+                </div>
+                <div col="col-1">
+                    <form method="post" action="{{ path('delete_comment', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                        <button class="btn"><i class="fas fa-trash-alt"></i></button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ const newItem = (e) => {
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
     
     const item = document.createElement("div");
-    item.classList.add("col");
+    item.classList.add("col-11");
     
     item.innerHTML = collectionHolder.dataset.prototype.replace(
         /__name__/g,

@@ -6,7 +6,7 @@ use App\Entity\Trick;
 use App\Entity\TrickGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,11 +25,22 @@ class TrickType extends AbstractType
                 'class' => TrickGroup::class,
                 'choice_label' => 'groupName'
             ])
-            ->add('trickImage', FileType::class, [
-                'multiple' => true,
-                'mapped' => false,
-                'required' => false
-            ])
+            ->add('trickImages', CollectionType::class, [
+                'entry_type' => TrickImageType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false
+            ]
+            )
+            ->add('trickVideos', CollectionType::class, [
+                'entry_type' => TrickVideoType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false
+            ]
+            )
         ;
     }
 
@@ -37,6 +48,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'csrf_protection' => false
         ]);
     }
 }

@@ -13,7 +13,10 @@ class TrickImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mediaName', FileType::class)
+            ->add('file', FileType::class, [
+                'required' => false,
+                'multiple' => false
+            ])
         ;
     }
 

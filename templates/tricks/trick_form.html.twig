@@ -16,10 +16,13 @@
     <h1> Créer un nouveau trick </h1>
     {% endif %}
     {{ form_start(formTrick) }}
-        {#{{ form_widget(formTrick._token) }}#}
+        
         {{ form_row(formTrick.trickName, {'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
+        
         {{ form_row(formTrick.trickDescription, {'attr': {'placeholder': 'Renseignez la description du trick'}})}}
+        
         {{ form_row(formTrick.trickGroup)}}
+
         <button type="button" class="btn btn-link btn-new" data-collection="#trickImages">Ajouter une image <i class="fas fa-plus-circle fa-2x"></i></button>
         <div 
             id="trickImages" 
@@ -28,12 +31,10 @@
             data-index="{{ formTrick.trickVideos | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
                 {% for trickImage in formTrick.trickImages %}
                     {{ include("/tricks/trickImage_form.html.twig", {formTrick: "trickImage"})}}
-                    {#{{ dump(trickImage) }}
-                    {{ form_widget(trickImage) }} #}
                 {% endfor %}
         </div>
-        {#
-        {{ form_errors(formTrick.trickVideos)}}
+
+
         <button type="button" class="btn btn-link btn-new" data-collection="#trickVideos">Ajouter une vidéo <i class="fas fa-plus-circle fa-2x"></i></button>
         <div 
             id="trickVideos" 
@@ -43,7 +44,8 @@
                 {% for trickVideo in formTrick.trickVideos %}
                     {{ include("/tricks/trickVideo_form.html.twig", {formTrick: "trickVideo"})}}
                 {% endfor %}
-        </div>#}
+        </div>
+
         {% if editMode %}
             <button type="submit" class="btn btn-primary m-3">Enregister les modifications</button>
         {% else %}

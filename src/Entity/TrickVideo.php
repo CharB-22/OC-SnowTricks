@@ -17,10 +17,6 @@ class TrickVideo
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $videoName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -35,18 +31,6 @@ class TrickVideo
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getVideoName(): ?string
-    {
-        return $this->videoName;
-    }
-
-    public function setVideoName(string $videoName): self
-    {
-        $this->videoName = $videoName;
-
-        return $this;
     }
 
     public function getVideoUrl(): ?string

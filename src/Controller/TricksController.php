@@ -111,26 +111,25 @@ class TricksController extends AbstractController
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
 
-            // On récupère les images transmises
-            $trickImages = $form->get('trickImage')->getData();
-            // Boucle sur les images
-            foreach ($trickImages as $trickImage)
-            {
-                //On génère un nouveau nom de fichier
-                $imageFile = uniqid(). '.' . $trickImage->getExtension();
+          // On récupère les images transmises
+            $trickImages = $form['trickImages']->getData();
+                // Boucle sur les images
+                foreach ($trickImages as $image)
+                {
+
+                    $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
+
+                    //On copie le fichier dans le dossier Upload
+                    $image->getFile()->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                        );
+    
+                    // Save the image name in the database
+                    $image->setMediaName($newFilename);
                 
-                //On copie le fichier dans le dossier Upload
-                $trickImage->move(
-                $this->getParameter('images_directory'),
-                $imageFile
-                );
+                }
 
-                // Save the image name in the database
-                $trickImg = new TrickImage();
-                $trickImg->setMediaName($imageFile);
-                $newTrick->addTrickImage($trickImg);
-
-            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newTrick);
             $entityManager->flush();

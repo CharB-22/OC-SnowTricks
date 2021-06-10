@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrickImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickImageRepository::class)
@@ -23,6 +24,11 @@ class TrickImage
     private $mediaName;
 
     /**
+     * @Assert\Image(mimeTypes = {"image/jpeg", "image/jpg", "image/png"}, mimeTypesMessage = "Format invalide")
+     */
+    private $file;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickImages")
      */
     private $trick;
@@ -40,6 +46,18 @@ class TrickImage
     public function setMediaName(string $mediaName): self
     {
         $this->mediaName = $mediaName;
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

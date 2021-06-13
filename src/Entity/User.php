@@ -13,8 +13,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
- * fields = {"username", "email"},
+ * fields = {"username"},
  * message = "Cet utilisateur existe déjà."
+ * )
+ * @UniqueEntity(
+ * fields = {"email"},
+ * message = "Cet email existe déjà."
  * )
  */
 class User implements UserInterface

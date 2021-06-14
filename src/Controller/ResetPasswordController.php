@@ -149,16 +149,19 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
+            $this->addFlash('reset_password_error', sprintf(
+                 'Il y a un problème avec votre demande de réinitialisation - %s',
+                   $e->getReason()
+                ));
 
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('hello@snowtricks.com', '"Snow Tricks"'))
+            ->from(new Address(
+                $this->getParameter('app.mailFrom_address'), 
+                $this->getParameter('app.mailFrom_name')
+                ))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')

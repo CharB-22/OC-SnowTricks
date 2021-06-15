@@ -25,6 +25,7 @@ security:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
             logout:
+                csrf_token_generator: security.csrf.token_manager
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route

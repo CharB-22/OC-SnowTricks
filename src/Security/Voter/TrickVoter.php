@@ -10,7 +10,7 @@ class TrickVoter extends Voter
 {
     protected function supports(string $attribute, $trick): bool
     {
-        return in_array($attribute, ['TRICK_EDIT', 'TRICK_CREATE', 'TRICK_DELETE'])
+        return in_array($attribute, ['TRICK_MANAGE'])
             && $trick instanceof \App\Entity\Trick;
     }
 
@@ -24,11 +24,7 @@ class TrickVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case 'TRICK_EDIT':
-                // Only access if the user is also the trick author
-                return $user == $trick->getUser();
-                break;
-            case 'TRICK_DELETE':
+            case 'TRICK_MANAGE':
                 // Only access if the user is also the trick author
                 return $user == $trick->getUser();
                 break;

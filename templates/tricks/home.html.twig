@@ -23,7 +23,7 @@
                 <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <a href="{{ path('trick_details',{'id': trick.id}) }}" >{{ trick.trickName }}</a>
-                    {% if app.user %}
+                    {% if is_granted('TRICK_MANAGE', trick) %}
                     <div class="d-flex">
                         <a href="{{ path('edit_trick',{'id': trick.id}) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>
                         <form method="post" action="{{ path('delete_trick', {'id': trick.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">

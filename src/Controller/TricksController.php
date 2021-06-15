@@ -49,7 +49,6 @@ class TricksController extends AbstractController
 
     /**
      * @Route("/tricks/{id}", name="trick_details", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_USER')")
      */
     public function getTrick(Trick $trick, Request $request) : Response
     {
@@ -143,7 +142,7 @@ class TricksController extends AbstractController
 
     /**
      * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
-     * @Security("is_granted('TRICK_EDIT', trick)")
+     * @Security("is_granted('TRICK_MANAGE', trick)")
      */
     public function updateTrick(Trick $trick, Request $request): Response
     {
@@ -196,7 +195,7 @@ class TricksController extends AbstractController
 
     /**
      * @Route("/trick_{id}/delete", name="delete_trick", methods={"GET","POST"})
-     * @Security("is_granted('TRICK_DELETE', trick)")
+     * @Security("is_granted('TRICK_MANAGE', trick)")
      */
     public function deleteTrick(Request $request, Trick $trick): Response
     {

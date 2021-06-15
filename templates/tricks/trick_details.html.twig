@@ -53,7 +53,7 @@
         <span class="badge bg-danger"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
     </div>
     <div class="container">
-        {% if app.user %}
+        {% if is_granted('ROLE_USER') %}
         {{ form_start(formComment) }}
             {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
             <button type="submit" class="btn btn-warning">Envoyer</button>

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class TricksController extends AbstractController
@@ -85,17 +86,15 @@ class TricksController extends AbstractController
 
     /**
      * @Route("/create_trick", name="create_trick", methods={"GET", "POST"})
-     * @Route("/{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
+     * You must be connected in order to create a pin
+     * @Security("is_granted('ROLE_USER')")
      */
-    public function manageTrickForm(Trick $newTrick = null, Request $request): Response
+    public function createTrick(Request $request): Response
     {
 
         $user = $this->getUser();
 
-        if (!$newTrick)
-        {
-            $newTrick = new Trick();
-        }  
+        $newTrick = new Trick();
         
         $form = $this->createForm(TrickType::class, $newTrick, ['csrf_protection' => false]);
 
@@ -103,15 +102,14 @@ class TricksController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$newTrick->getId())
-            {
-                $newTrick->setCreatedAt(new \DateTime()); 
-            }
 
+            // Fill the trick Information
+            $newTrick->setCreatedAt(new \DateTime()); 
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
 
-          // On récupère les images transmises
+
+          // Get the uploaded images
             $trickImages = $form['trickImages']->getData();
                 // Boucle sur les images
                 foreach ($trickImages as $image)
@@ -137,14 +135,67 @@ class TricksController extends AbstractController
             return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
         }
 
-        return $this->render('tricks/trick_form.html.twig', [
+        return $this->render('tricks/createTrick_form.html.twig', [
             'formTrick' => $form->createView(),
-            'editMode' => $newTrick->getId() !== null
         ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="delete_trick", methods={"GET","POST"})
+     * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "PUT"})
+     * @Security("is_granted('TRICK_MANAGE', trick) || is_granted('ROLE_ADMIN')")
+     */
+    public function updateTrick(Trick $trick, Request $request): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(TrickType::class, $trick,[
+            'method' => 'PUT'
+        ]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+            // Fill the trick Information
+            $trick->setModifiedAt(new \DateTime());
+            $trick->setUser($user);
+
+
+          // Get the uploaded images
+            $trickImages = $form['trickImages']->getData();
+                // Boucle sur les images
+                foreach ($trickImages as $image)
+                {
+
+                    $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
+
+                    //On copie le fichier dans le dossier Upload
+                    $image->getFile()->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                        );
+    
+                    // Save the image name in the database
+                    $image->setMediaName($newFilename);
+                
+                }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($trick);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('trick_details', ['id' => $trick->getId()]);
+        }
+
+        return $this->render('tricks/updateTrick_form.html.twig', [
+            'trick' => $trick,
+            'formTrick' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/trick_{id}/delete", name="delete_trick", methods={"GET","POST"})
+     * @Security("is_granted('TRICK_MANAGE', trick)")
      */
     public function deleteTrick(Request $request, Trick $trick): Response
     {
@@ -158,7 +209,8 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks/delete_comment/{id}", name="delete_comment", methods={"POST", "GET"})
+     * @Route("/tricks/delete_comment/comment_{id}", name="delete_comment", methods={"POST", "GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function deleteComment(Comment $comment, Request $request) : Response
     {
@@ -174,7 +226,7 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks/delete_image/{id}", name="delete_trickImage", methods={"POST", "GET"})
+     * @Route("/tricks/delete_image/image_{id}", name="delete_trickImage", methods={"POST", "GET"})
      */
     public function deleteTrickImage(Request $request, TrickImage $trickImage)
     {

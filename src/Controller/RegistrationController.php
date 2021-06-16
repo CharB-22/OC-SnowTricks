@@ -47,6 +47,7 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $user->setRoles(['ROLE_USER']);
 
             // Save the image profile
             $profilePicture = $form->get('profilePicture')->getData();

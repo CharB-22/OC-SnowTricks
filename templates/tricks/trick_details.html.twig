@@ -5,7 +5,7 @@
 {% block body %}
 
         <div class="text-center">
-            {% if trickImage | first %}
+            {% if trick.trickImages | first %}
 
                 <img
                     class="w-75 p-2"
@@ -23,7 +23,7 @@
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner d-flex align-items-center">
                 <div class="carousel-item active d-flex   align-items-center">
-                    {% for image in trickImage %}
+                    {% for image in trick.trickImages %}
                         {% if not loop.first %}
                             <img
                                 class="w-25 p-2"
@@ -62,12 +62,12 @@
     </div>
     <div class="container">
         {% if is_granted('ROLE_USER') %}
-        {{ form_start(formComment) }}
-            {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
-            <button type="submit" class="btn btn-warning">Envoyer</button>
-        {{ form_end(formComment) }}
+            {{ form_start(formComment) }}
+                {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
+                <button type="submit" class="btn btn-warning">Envoyer</button>
+            {{ form_end(formComment) }}
         {% endif %}
-        {% for comment in comments%}
+        {% for comment in trick.comments %}
         <div class="mb-3 d-flew card row">
             <div class="d-flex align-items-center">
                 <div class="col-1">

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Entity\TrickImage;
+use App\Entity\TrickVideo;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,7 +56,7 @@ class TricksController extends AbstractController
         $newComment = new Comment();
         $user = $this->getUser();
         
-        $form = $this->createForm(CommentType::class, $newComment, ['csrf_protection' => false]);
+        $form = $this->createForm(CommentType::class, $newComment);
 
         $form->handleRequest($request);
 
@@ -71,14 +72,10 @@ class TricksController extends AbstractController
             
         } 
 
-        $trickComments = $trick->getComments();
-        $trickImages = $trick->getTrickImages();
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
             'formComment' => $form->createView(),
-            'comments' => $trickComments,
-            'trickImage' => $trickImages
         ]);
     }
 
@@ -96,7 +93,7 @@ class TricksController extends AbstractController
 
         $newTrick = new Trick();
         
-        $form = $this->createForm(TrickType::class, $newTrick, ['csrf_protection' => false]);
+        $form = $this->createForm(TrickType::class, $newTrick);
 
         $form->handleRequest($request);
 
@@ -243,5 +240,24 @@ class TricksController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
+    }
+    
+    /**
+     * @Route("/tricks/delete_video/video_{id}", name="delete_trickVideo", methods={"POST", "GET"})
+     */
+    public function deleteTrickVideo(Request $request, TrickVideo $trickVideo) : Response
+    {
+ 
+        if ($this->isCsrfTokenValid('delete'.$trickVideo->getId(), $request->request->get('_token')))
+        {
+            // Delete it from the uploads folder
+            $videoToDelete = $trickVideo->getVideoUrl();
+            
+            // Delete it from the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($videoToDelete);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('edit_trick', ['id' => $trickVideo->getTrick()->getId()]);
     }    
 }

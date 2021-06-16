@@ -4,14 +4,22 @@
 
 {% block body %}
 
-    <div class="text-center">
-        <div class="vh-70">
-            <img
-                src="{{ asset('/uploads/' ~ trickImage[0].mediaName ) }}"
-                alt="{{ trick.trickName }} Image {{ trickImage[0].id }}"
-            />
-        </div>  
+        <div class="text-center">
+            {% if trickImage | first %}
 
+                <img
+                    class="w-75 p-2"
+                    src="{{ asset('/uploads/' ~  trickImage | first .mediaName ) }}"
+                    alt="{{ trick.trickName }} Image "
+                />
+                {#{% else %}
+                <img
+                    class="w-100 p-2"
+                    src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"
+                    alt="Ceci est un placeholder"
+                />#}
+            {% endif %}
+        </div>
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner d-flex align-items-center">
                 <div class="carousel-item active d-flex   align-items-center">
@@ -41,7 +49,7 @@
                 </button>
             </div>
         </div>
-    </div>
+
 
 
     <h1> {{ trick.trickName }} </h1>

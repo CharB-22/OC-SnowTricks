@@ -141,14 +141,16 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
-     * @Security("is_granted('TRICK_MANAGE', trick)")
+     * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "PUT"})
+     * @Security("is_granted('TRICK_MANAGE', trick) || is_granted('ROLE_ADMIN')")
      */
     public function updateTrick(Trick $trick, Request $request): Response
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(TrickType::class, $trick, ['csrf_protection' => false]);
+        $form = $this->createForm(TrickType::class, $trick,[
+            'method' => 'PUT'
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -187,8 +189,6 @@ class TricksController extends AbstractController
 
         return $this->render('tricks/updateTrick_form.html.twig', [
             'trick' => $trick,
-            'trickImage' => $trick->getTrickImages(),
-            'trickVideo' => $trick->getTrickVideos(),
             'formTrick' => $form->createView(),
         ]);
     }

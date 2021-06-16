@@ -228,9 +228,11 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/delete_image/image_{id}", name="delete_trickImage", methods={"POST", "GET"})
      */
-    public function deleteTrickImage(Request $request, TrickImage $trickImage)
+    public function deleteTrickImage(Request $request, TrickImage $trickImage) : Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token'))) {
+ 
+        if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token')))
+        {
             // Delete it from the uploads folder
             $imageName = $trickImage->getMediaName();
             unlink($this->getParameter('images_directory'). '/' . $imageName);
@@ -240,5 +242,6 @@ class TricksController extends AbstractController
             $entityManager->remove($trickImage);
             $entityManager->flush();
         }
+        return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
     }    
 }

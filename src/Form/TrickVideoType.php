@@ -13,7 +13,12 @@ class TrickVideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('videoUrl', TextType::class)
+            ->add('videoUrl', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Url de la vidéo'
+                ]
+            ])
         ;
     }
 

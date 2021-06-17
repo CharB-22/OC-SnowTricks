@@ -27,10 +27,13 @@ class TrickType extends AbstractType
             ])
             ->add('trickImages', CollectionType::class, [
                 'entry_type' => TrickImageType::class,
-                'by_reference' => false,
+                'label' => false,
+                /*'by_reference' => false,*/
                 'allow_add' => true,
                 'allow_delete' => true,
-                'error_bubbling' => false
+                'required' => false,
+                'mapped' => false
+
             ]
             )
             ->add('trickVideos', CollectionType::class, [

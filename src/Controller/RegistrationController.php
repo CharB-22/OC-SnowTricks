@@ -32,6 +32,7 @@ class RegistrationController extends AbstractController
     {
         //if already connected, can't access this page
         if ($this->getUser()) {
+            $this->addFlash('danger', 'Vous êtes déjà connecté !');
             return $this->redirectToRoute('home');
         }
 
@@ -85,6 +86,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
+
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

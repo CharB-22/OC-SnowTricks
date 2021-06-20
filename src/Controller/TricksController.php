@@ -69,6 +69,8 @@ class TricksController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newComment);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Votre commentaire a bien été créé !');
             
         } 
 
@@ -129,8 +131,11 @@ class TricksController extends AbstractController
             $entityManager->persist($newTrick);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre trick a bien été créé !');
+
             return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
         }
+
 
         return $this->render('tricks/createTrick_form.html.twig', [
             'formTrick' => $form->createView(),
@@ -181,6 +186,8 @@ class TricksController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le trick a bien été modifié !');
+
             return $this->redirectToRoute('trick_details', ['id' => $trick->getId()]);
         }
 
@@ -202,6 +209,8 @@ class TricksController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('danger', 'Ce trick a bien été supprimé !');
+
         return $this->redirectToRoute('home');
     }
 
@@ -217,6 +226,7 @@ class TricksController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('danger', 'Le commentaire a été supprimé !');
 
         return $this->redirectToRoute('home');
 
@@ -239,6 +249,7 @@ class TricksController extends AbstractController
             $entityManager->remove($trickImage);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
     }
     

@@ -52,7 +52,16 @@
                 </div>
             </div>
         </nav>
+        {% for label, messages in app.flashes(['success', 'warning', 'danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="container p-3">
+
+
             {% block body %}{% endblock %}
         </div>
         <footer class="text-center text-lg-start bg-light text-muted">

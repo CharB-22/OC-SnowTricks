@@ -259,8 +259,6 @@ class TricksController extends AbstractController
     public function deleteTrickImage(Request $request, TrickImage $trickImage) : Response
     {
 
-        if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token')))
-        {
             // Delete it from the uploads folder
             $imageName = $trickImage->getMediaName();
             unlink($this->getParameter('images_directory'). '/' . $imageName);
@@ -269,7 +267,6 @@ class TricksController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trickImage);
             $entityManager->flush();
-        }
 
         return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
     }
@@ -279,17 +276,12 @@ class TricksController extends AbstractController
      */
     public function deleteTrickVideo(Request $request, TrickVideo $trickVideo) : Response
     {
- 
-        if ($this->isCsrfTokenValid('delete'.$trickVideo->getId(), $request->request->get('_token')))
-        {
-            // Delete it from the uploads folder
-            $videoToDelete = $trickVideo->getVideoUrl();
             
             // Delete it from the database
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($videoToDelete);
+            $entityManager->remove($trickVideo);
             $entityManager->flush();
-        }
+            
         return $this->redirectToRoute('edit_trick', ['id' => $trickVideo->getTrick()->getId()]);
     }    
 }

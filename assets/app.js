@@ -22,7 +22,7 @@ const newItem = (e) => {
         collectionHolder.dataset.index
     );
 
-    item.addEventListener("click", () => item.remove());
+    item.querySelector('.btn-remove').addEventListener("click", () => item.remove());
     
     collectionHolder.appendChild(item);
     collectionHolder.dataset.index++;

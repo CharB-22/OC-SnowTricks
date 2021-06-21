@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TricksController extends AbstractController
 {
@@ -49,7 +49,7 @@ class TricksController extends AbstractController
 
 
     /**
-     * @Route("/tricks/{id}", name="trick_details", methods={"GET", "POST"})
+     * @Route("/tricks/{slug}", name="trick_details", methods={"GET", "POST"})
      */
     public function getTrick(Trick $trick, Request $request) : Response
     {
@@ -88,7 +88,7 @@ class TricksController extends AbstractController
      * You must be connected in order to create a pin
      * @Security("is_granted('ROLE_USER')")
      */
-    public function createTrick(Request $request): Response
+    public function createTrick(Request $request, SluggerInterface $slugger): Response
     {
 
         $user = $this->getUser();
@@ -106,7 +106,11 @@ class TricksController extends AbstractController
             $newTrick->setCreatedAt(new \DateTime()); 
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
-            $newTrick->setSlug(uniqid());
+
+            // Create a slug
+            $urlName = $newTrick->getTrickName() . '-'. $newTrick->getId();
+            $slug= $slugger->slug($urlName);
+            $newTrick->setSlug($slug);
 
           // Get the uploaded images
             $trickImages = $form['trickImages']->getData();
@@ -137,7 +141,7 @@ class TricksController extends AbstractController
 
             $this->addFlash('success', 'Votre trick a bien été créé !');
 
-            return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
+            return $this->redirectToRoute('trick_details', ['slug' => $newTrick->getSlug()]);
         }
 
 
@@ -208,7 +212,7 @@ class TricksController extends AbstractController
 
             $this->addFlash('success', 'Le trick a bien été modifié !');
 
-            return $this->redirectToRoute('trick_details', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('trick_details', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('tricks/trick_form.html.twig', [

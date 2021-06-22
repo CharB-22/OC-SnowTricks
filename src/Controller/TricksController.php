@@ -7,7 +7,6 @@ use App\Entity\Comment;
 use App\Entity\TrickImage;
 use App\Entity\TrickVideo;
 use App\Form\TrickType;
-use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,33 +50,14 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/{slug}", name="trick_details", methods={"GET", "POST"})
      */
-    public function getTrick(Trick $trick, Request $request) : Response
+    public function getTrick(Trick $trick, CommentController $commentController, Request $request) : Response
     {
-        $newComment = new Comment();
+
         $user = $this->getUser();
-        
-        $form = $this->createForm(CommentType::class, $newComment);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $newComment->setCommentDate(new \DateTime());
-            $newComment->setTrick($trick);
-            $newComment->setUser($user);
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($newComment);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Votre commentaire a bien été créé !');
-            
-        } 
-
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
-            'formComment' => $form->createView(),
+            'commentForm' => $commentController->createComment($trick, $request)
         ]);
     }
 
@@ -239,23 +219,6 @@ class TricksController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @Route("/tricks/delete_comment/comment_{id}", name="delete_comment", methods={"POST", "GET"})
-     * @Security("is_granted('ROLE_ADMIN')")
-     */
-    public function deleteComment(Comment $comment, Request $request) : Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($comment);
-            $entityManager->flush();
-        }
-
-        $this->addFlash('danger', 'Le commentaire a été supprimé !');
-
-        return $this->redirectToRoute('home');
-
-    }
 
     /**
      * @Route("/tricks/delete_image/image_{id}", name="delete_trickImage", methods={"POST", "GET"})

@@ -16,7 +16,7 @@
                         <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
                     {% endif %}
                     <div class="card-footer d-flex justify-content-between align-items-center">
-                        <a href="{{ path('trick_details',{'id': trick.id}) }}" >{{ trick.trickName }}</a>
+                        <a href="{{ path('trick_details',{'slug': trick.slug}) }}" >{{ trick.trickName }}</a>
                         {% if is_granted('TRICK_MANAGE', trick) or is_granted('ROLE_ADMIN') %}
                         <div class="d-flex">
                             <a href="{{ path('edit_trick',{'id': trick.id}) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>

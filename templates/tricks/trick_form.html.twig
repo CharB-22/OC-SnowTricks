@@ -34,10 +34,7 @@
                     <div class="col">
                     {% if trickImage.vars.data.mediaName %}
                         <img class="w-25" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
-                        {#<form method="post" action="{{ path('delete_trickImage', {'id': trickImage.vars.value.id}) }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trickImage.vars.value.id) }}">
-                            <button type="button" class="delete-image btn btn-link"><i class="fas fa-trash-alt"></i></button>
-                        </form>#}
+                        <a href="{{ path('delete_trickImage',{'id': trickImage.vars.value.id}) }}"><i class="fas fa-trash-alt"></i></a>
                         <p>Modifier l'image :</p>
                         {{ form_row(trickImage.file) }}
                     {% else %}
@@ -61,11 +58,8 @@
                         <iframe 
                             class="embed-responsive-item" 
                             src="{{ trickVideo.vars.value.videoUrl }}">
-                        </iframe> 
-                        {#<form method="post" action="{{ path('delete_trickVideo', {'id': trickVideo.vars.value.id}) }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trickVideo.vars.value.id) }}">
-                            <button type="button" class="delete-image btn btn-link"><i class="fas fa-trash-alt"></i></button>
-                        </form>#}
+                        </iframe>
+                        <a href="{{ path('delete_trickVideo',{'id': trickVideo.vars.value.id}) }}"><i class="fas fa-trash-alt"></i></a>
                         <p>Modifier la video :</p>
                         {{ form_row(trickVideo.videoUrl) }}
                     {% else %}

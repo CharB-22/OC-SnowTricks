@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TricksController extends AbstractController
 {
@@ -49,7 +49,7 @@ class TricksController extends AbstractController
 
 
     /**
-     * @Route("/tricks/{id}", name="trick_details", methods={"GET", "POST"})
+     * @Route("/tricks/{slug}", name="trick_details", methods={"GET", "POST"})
      */
     public function getTrick(Trick $trick, Request $request) : Response
     {
@@ -88,7 +88,7 @@ class TricksController extends AbstractController
      * You must be connected in order to create a pin
      * @Security("is_granted('ROLE_USER')")
      */
-    public function createTrick(Request $request): Response
+    public function createTrick(Request $request, SluggerInterface $slugger): Response
     {
 
         $user = $this->getUser();
@@ -106,7 +106,11 @@ class TricksController extends AbstractController
             $newTrick->setCreatedAt(new \DateTime()); 
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
-            $newTrick->setSlug(uniqid());
+
+            // Create a slug
+            $urlName = $newTrick->getTrickName() . '-'. $newTrick->getId();
+            $slug= $slugger->slug($urlName);
+            $newTrick->setSlug($slug);
 
           // Get the uploaded images
             $trickImages = $form['trickImages']->getData();
@@ -137,7 +141,7 @@ class TricksController extends AbstractController
 
             $this->addFlash('success', 'Votre trick a bien été créé !');
 
-            return $this->redirectToRoute('trick_details', ['id' => $newTrick->getId()]);
+            return $this->redirectToRoute('trick_details', ['slug' => $newTrick->getSlug()]);
         }
 
 
@@ -208,7 +212,7 @@ class TricksController extends AbstractController
 
             $this->addFlash('success', 'Le trick a bien été modifié !');
 
-            return $this->redirectToRoute('trick_details', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('trick_details', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('tricks/trick_form.html.twig', [
@@ -259,8 +263,6 @@ class TricksController extends AbstractController
     public function deleteTrickImage(Request $request, TrickImage $trickImage) : Response
     {
 
-        if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token')))
-        {
             // Delete it from the uploads folder
             $imageName = $trickImage->getMediaName();
             unlink($this->getParameter('images_directory'). '/' . $imageName);
@@ -269,7 +271,6 @@ class TricksController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trickImage);
             $entityManager->flush();
-        }
 
         return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
     }
@@ -279,17 +280,12 @@ class TricksController extends AbstractController
      */
     public function deleteTrickVideo(Request $request, TrickVideo $trickVideo) : Response
     {
- 
-        if ($this->isCsrfTokenValid('delete'.$trickVideo->getId(), $request->request->get('_token')))
-        {
-            // Delete it from the uploads folder
-            $videoToDelete = $trickVideo->getVideoUrl();
             
             // Delete it from the database
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($videoToDelete);
+            $entityManager->remove($trickVideo);
             $entityManager->flush();
-        }
+            
         return $this->redirectToRoute('edit_trick', ['id' => $trickVideo->getTrick()->getId()]);
     }    
 }

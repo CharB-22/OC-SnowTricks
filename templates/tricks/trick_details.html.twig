@@ -9,15 +9,9 @@
 
                 <img
                     class="w-75 p-2"
-                    src="{{ asset('/uploads/' ~  trickImage | first .mediaName ) }}"
-                    alt="{{ trick.trickName }} Image "
+                    src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}"
+                    alt="{{ trick.trickName }} Image"
                 />
-                {#{% else %}
-                <img
-                    class="w-100 p-2"
-                    src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"
-                    alt="Ceci est un placeholder"
-                />#}
             {% endif %}
         </div>
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">

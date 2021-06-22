@@ -106,26 +106,30 @@ class TricksController extends AbstractController
             $newTrick->setCreatedAt(new \DateTime()); 
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
-
+            $newTrick->setSlug(uniqid());
 
           // Get the uploaded images
             $trickImages = $form['trickImages']->getData();
-                // Boucle sur les images
-                foreach ($trickImages as $image)
-                {
+            
+            if($trickImages)
+            {
+               // Boucle sur les images
+               foreach ($trickImages as $image)
+               {
 
-                    $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
+                   $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
 
-                    //On copie le fichier dans le dossier Upload
-                    $image->getFile()->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                        );
-    
-                    // Save the image name in the database
-                    $image->setMediaName($newFilename);
-                
-                }
+                   //On copie le fichier dans le dossier Upload
+                   $image->getFile()->move(
+                       $this->getParameter('images_directory'),
+                       $newFilename
+                       );
+                   // Save the image name in the database
+                   $image->setMediaName($newFilename);
+                   
+               }
+
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newTrick);
@@ -137,50 +141,66 @@ class TricksController extends AbstractController
         }
 
 
-        return $this->render('tricks/createTrick_form.html.twig', [
+        return $this->render('tricks/trick_form.html.twig', [
             'formTrick' => $form->createView(),
+            'editMode' => $newTrick->getId() !== null
         ]);
     }
 
     /**
-     * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "PUT"})
+     * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
      * @Security("is_granted('TRICK_MANAGE', trick) || is_granted('ROLE_ADMIN')")
      */
     public function updateTrick(Trick $trick, Request $request): Response
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(TrickType::class, $trick,[
-            'method' => 'PUT'
-        ]);
+        $form = $this->createForm(TrickType::class, $trick);
+        // Get images already stock in Database
+        $trickImages = $trick->getTrickImages();
+        $trickVideos = $trick->getTrickVideos();
+        $form->get('trickImages')->setData($trickImages);
+        $form->get('trickVideos')->setData($trickVideos);
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-
+            
             // Fill the trick Information
             $trick->setModifiedAt(new \DateTime());
             $trick->setUser($user);
 
 
           // Get the uploaded images
-            $trickImages = $form['trickImages']->getData();
+
+            $newImages = $form['trickImages']->getData();
+
+            // Manage images - former images AND new images
+            if($trickImages)
+            {
                 // Boucle sur les images
-                foreach ($trickImages as $image)
+                foreach ($newImages as $image)
                 {
+                    if($image->getFile())
+                    {
+                        $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
 
-                    $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
-
-                    //On copie le fichier dans le dossier Upload
-                    $image->getFile()->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                        );
-    
-                    // Save the image name in the database
-                    $image->setMediaName($newFilename);
+                        //On copie le fichier dans le dossier Upload
+                        $image->getFile()->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                            );
+        
+                        // Save the image name in the database
+                        $image->setMediaName($newFilename);
+                    }
                 
                 }
+            }
+
+
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
@@ -191,9 +211,10 @@ class TricksController extends AbstractController
             return $this->redirectToRoute('trick_details', ['id' => $trick->getId()]);
         }
 
-        return $this->render('tricks/updateTrick_form.html.twig', [
+        return $this->render('tricks/trick_form.html.twig', [
             'trick' => $trick,
             'formTrick' => $form->createView(),
+            'editMode' => $trick->getId() !== null
         ]);
     }
 
@@ -237,7 +258,7 @@ class TricksController extends AbstractController
      */
     public function deleteTrickImage(Request $request, TrickImage $trickImage) : Response
     {
- 
+
         if ($this->isCsrfTokenValid('delete'.$trickImage->getId(), $request->request->get('_token')))
         {
             // Delete it from the uploads folder

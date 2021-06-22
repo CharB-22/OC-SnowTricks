@@ -28,10 +28,23 @@
         <div 
             id="trickImages" 
             class="row" 
-            data-prototype="{{ include("tricks/trickImage_form.html.twig", {formTrick : formTrick.trickImages.vars.prototype})|e("html_attr") }}" 
-            data-index="{{ formTrick.trickVideos | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
+            data-prototype= "{{ form_widget(formTrick.trickImages.vars.prototype)|e }}"
+            data-index="{{ formTrick.trickImages | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
                 {% for trickImage in formTrick.trickImages %}
-                    {{ include("/tricks/trickImage_form.html.twig", {formTrick: "trickImage"})}}
+                    <div class="col">
+                    {% if trickImage.vars.data.mediaName %}
+                        <img class="w-25" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
+                        {#<form method="post" action="{{ path('delete_trickImage', {'id': trickImage.vars.value.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trickImage.vars.value.id) }}">
+                            <button type="button" class="delete-image btn btn-link"><i class="fas fa-trash-alt"></i></button>
+                        </form>#}
+                        <p>Modifier l'image :</p>
+                        {{ form_row(trickImage.file) }}
+                    {% else %}
+                        {{form_widget(trickImage) }}
+                    {% endif %}
+                        
+                    </div>
                 {% endfor %}
         </div>
 
@@ -40,10 +53,25 @@
         <div 
             id="trickVideos" 
             class="row" 
-            data-prototype="{{ include("tricks/trickVideo_form.html.twig", {formTrick : formTrick.trickVideos.vars.prototype})|e("html_attr") }}" 
+            data-prototype="{{ form_widget(formTrick.trickVideos.vars.prototype)|e }}" 
             data-index="{{ formTrick.trickVideos | length > 0 ? formTrick.trickVideos|last.vars.name + 1 : 0 }}">
                 {% for trickVideo in formTrick.trickVideos %}
-                    {{ include("/tricks/trickVideo_form.html.twig", {formTrick: "trickVideo"})}}
+                    <div class="col">
+                    {% if trickVideo.vars.data.videoUrl %}
+                        <iframe 
+                            class="embed-responsive-item" 
+                            src="{{ trickVideo.vars.value.videoUrl }}">
+                        </iframe> 
+                        {#<form method="post" action="{{ path('delete_trickVideo', {'id': trickVideo.vars.value.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trickVideo.vars.value.id) }}">
+                            <button type="button" class="delete-image btn btn-link"><i class="fas fa-trash-alt"></i></button>
+                        </form>#}
+                        <p>Modifier la video :</p>
+                        {{ form_row(trickVideo.videoUrl) }}
+                    {% else %}
+                        {{form_widget(trickVideo) }}
+                    {% endif %}
+                    </div>
                 {% endfor %}
         </div>
 

@@ -14,7 +14,6 @@ import './bootstrap';
 const newItem = (e) => {
     
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
-    
     const item = document.createElement("div");
     item.classList.add("col-11");
     
@@ -22,12 +21,13 @@ const newItem = (e) => {
         /__name__/g,
         collectionHolder.dataset.index
     );
-    
-    item.querySelector('.btn-remove').addEventListener("click", () => item.remove());
 
+    item.querySelector('.btn-remove').addEventListener("click", () => item.remove());
+    
     collectionHolder.appendChild(item);
     collectionHolder.dataset.index++;
 }
+
 
 document
 .querySelectorAll('.btn-remove')

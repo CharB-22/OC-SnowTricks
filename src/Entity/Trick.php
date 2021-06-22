@@ -7,9 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+* @UniqueEntity(
+ * fields = {"trickName"},
+ * message = "Ce trick existe déjà."
+ * )
  */
 class Trick
 {
@@ -73,6 +78,11 @@ class Trick
      * @Assert\Valid
      */
     private $trickVideos;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -249,6 +259,18 @@ class Trick
                 $trickVideo->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = uniqid($this->trickName);
 
         return $this;
     }

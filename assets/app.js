@@ -6,10 +6,11 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
-
+import './styles/app.scss';
+import { Tooltip, Toast, Popover } from 'bootstrap';
 // start the Stimulus application
 import './bootstrap'; 
+
 
 const newItem = (e) => {
     

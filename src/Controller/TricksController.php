@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Cocur\Slugify\Slugify;
 
 class TricksController extends AbstractController
 {
@@ -87,9 +88,10 @@ class TricksController extends AbstractController
             $newTrick->setModifiedAt(new \DateTime());
             $newTrick->setUser($user);
 
-            // Create a slug
-            $urlName = $newTrick->getTrickName() . '-'. $newTrick->getId();
-            $slug= $slugger->slug($urlName);
+            // Create the slug
+
+            $slug= $slugger->slug($newTrick->getTrickName());
+
             $newTrick->setSlug($slug);
 
           // Get the uploaded images

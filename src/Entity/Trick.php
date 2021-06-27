@@ -270,7 +270,7 @@ class Trick
 
     public function setSlug(string $slug): self
     {
-        $this->slug = uniqid($this->trickName);
+        $this->slug = $slug;
 
         return $this;
     }

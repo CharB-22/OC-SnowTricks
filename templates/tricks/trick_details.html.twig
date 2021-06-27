@@ -56,10 +56,7 @@
     </div>
     <div class="container">
         {% if is_granted('ROLE_USER') %}
-            {{ form_start(formComment) }}
-                {{ form_row(formComment.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
-                <button type="submit" class="btn btn-warning">Envoyer</button>
-            {{ form_end(formComment) }}
+            {% include 'comment/createComment_form.html.twig' %}
         {% endif %}
         {% for comment in trick.comments %}
         <div class="mb-3 d-flew card row">
@@ -74,7 +71,7 @@
                 </div>
                 {% if is_granted('ROLE_ADMIN')%}
                 <div col="col-1">
-                    <form method="post" action="{{ path('delete_comment', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <form method="post" action="{{ path('delete_comment', {'id': comment.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
                         <button class="btn"><i class="fas fa-trash-alt"></i></button>
                     </form>

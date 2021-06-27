@@ -7,13 +7,14 @@ use App\Entity\Comment;
 use App\Entity\TrickImage;
 use App\Entity\TrickVideo;
 use App\Form\TrickType;
+use App\Service\FileUploader; 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Cocur\Slugify\Slugify;
 
 class TricksController extends AbstractController
 {
@@ -69,7 +70,7 @@ class TricksController extends AbstractController
      * You must be connected in order to create a pin
      * @Security("is_granted('ROLE_USER')")
      */
-    public function createTrick(Request $request, SluggerInterface $slugger): Response
+    public function createTrick(Request $request, SluggerInterface $slugger, FileUploader $fileUploader): Response
     {
 
         $user = $this->getUser();
@@ -102,17 +103,10 @@ class TricksController extends AbstractController
                // Boucle sur les images
                foreach ($trickImages as $image)
                {
-
-                   $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
-
-                   //On copie le fichier dans le dossier Upload
-                   $image->getFile()->move(
-                       $this->getParameter('images_directory'),
-                       $newFilename
-                       );
+                    // Use the fileUploader service to save the image in the upload folder
+                    $newFilename = $fileUploader->upload($image->getFile());
                    // Save the image name in the database
-                   $image->setMediaName($newFilename);
-                   
+                   $image->setMediaName($newFilename);   
                }
 
             }
@@ -137,7 +131,7 @@ class TricksController extends AbstractController
      * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
      * @Security("is_granted('TRICK_MANAGE', trick) || is_granted('ROLE_ADMIN')")
      */
-    public function updateTrick(Trick $trick, Request $request): Response
+    public function updateTrick(Trick $trick, Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->getUser();
 
@@ -170,16 +164,10 @@ class TricksController extends AbstractController
                 {
                     if($image->getFile())
                     {
-                        $newFilename = uniqid().'.'.$image->getFile()->guessExtension();
-
-                        //On copie le fichier dans le dossier Upload
-                        $image->getFile()->move(
-                            $this->getParameter('images_directory'),
-                            $newFilename
-                            );
-        
+                        // Use the fileUploader service to save the image in the upload folder
+                        $newFilename = $fileUploader->upload($image->getFile());
                         // Save the image name in the database
-                        $image->setMediaName($newFilename);
+                        $image->setMediaName($newFilename);   
                     }
                 
                 }

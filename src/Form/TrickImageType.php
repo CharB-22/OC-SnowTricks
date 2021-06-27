@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class TrickImageType extends AbstractType
 {
@@ -17,6 +18,16 @@ class TrickImageType extends AbstractType
             ->add('file', FileType::class, [
                 'label' => false,
                 'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg'
+                        ],
+                        'mimeTypesMessage' => 'Merci d\'upload un fichier jpg ou jpeg',
+                    ])
+                ],
             ])
             ->add('Delete', ButtonType::class, [
                 'attr' => ['class' => 'btn btn-remove'],

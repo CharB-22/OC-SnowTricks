@@ -7,6 +7,8 @@ use App\Entity\Comment;
 use App\Entity\TrickImage;
 use App\Entity\TrickVideo;
 use App\Form\TrickType;
+use App\Repository\TrickImageRepository;
+use App\Repository\TrickVideoRepository;
 use App\Service\FileUploader; 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -131,14 +133,15 @@ class TricksController extends AbstractController
      * @Route("/trick_{id}/edit_trick", name="edit_trick", methods={"GET", "POST"})
      * @Security("is_granted('TRICK_MANAGE', trick) || is_granted('ROLE_ADMIN')")
      */
-    public function updateTrick(Trick $trick, Request $request, FileUploader $fileUploader): Response
+    public function updateTrick(Trick $trick, TrickImageRepository $trickImageRepository, TrickVideoRepository $trickVideoRepository, Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->getUser();
 
         $form = $this->createForm(TrickType::class, $trick);
         // Get images already stock in Database
-        $trickImages = $trick->getTrickImages();
-        $trickVideos = $trick->getTrickVideos();
+        //$trickImages = $trick->getTrickImages();
+        $trickImages = $trickImageRepository->findBy(array('trick' => $trick->getId()));
+        $trickVideos = $trickVideoRepository->findBy(array('trick' => $trick->getId()));
         $form->get('trickImages')->setData($trickImages);
         $form->get('trickVideos')->setData($trickVideos);
 
@@ -155,13 +158,16 @@ class TricksController extends AbstractController
           // Get the uploaded images
 
             $newImages = $form['trickImages']->getData();
-
+            
+            $this->deleteTrickImage($trickImages, $newImages);
+            
             // Manage images - former images AND new images
-            if($trickImages)
+            if($newImages)
             {
                 // Boucle sur les images
                 foreach ($newImages as $image)
                 {
+                    
                     if($image->getFile())
                     {
                         // Use the fileUploader service to save the image in the upload folder
@@ -172,10 +178,7 @@ class TricksController extends AbstractController
                 
                 }
             }
-
-
-
-
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -210,22 +213,39 @@ class TricksController extends AbstractController
     }
 
 
-    /**
-     * @Route("/tricks/delete_image/image_{id}", name="delete_trickImage", methods={"POST", "GET"})
-     */
-    public function deleteTrickImage(Request $request, TrickImage $trickImage) : Response
+    public function deleteTrickImage($trickImages, $newImages)
     {
-
-            // Delete it from the uploads folder
-            $imageName = $trickImage->getMediaName();
-            unlink($this->getParameter('images_directory'). '/' . $imageName);
+        foreach($trickImages as $image)
+        {
+            $currentName = $image->getMediaName();
+            $saveImage = false;
             
-            // Delete it from the database
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($trickImage);
-            $entityManager->flush();
+            // Compare the batch of images submit with the form with the trick Images already saved.
+            foreach($newImages as $currentNewImages)
+            {
+                // Check that the already saved images are still here.
+                if($currentName == $currentNewImages->getMediaName())
+                {
+                    $saveImage = true;
+                    break;
+                }
+            }
 
-        return $this->redirectToRoute('edit_trick', ['id' => $trickImage->getTrick()->getId()]);
+            //If we can't find the old trick Images in the new batch - we need to delete it.
+            if ($saveImage ==false)
+            {
+                // Get the name of the old image to delete
+                $imageName = $image->getMediaName();
+                unlink($this->getParameter('images_directory'). '/' . $imageName);
+
+                // Delete it from the database
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($image);
+                $entityManager->flush();
+            }
+
+        }
+
     }
     
     /**

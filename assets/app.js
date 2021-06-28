@@ -14,6 +14,7 @@ import './bootstrap';
 const $ = require('jquery');
 
 
+// Generate embedded forms for Image and video collection
 
 const newItem = (e) => {
     
@@ -41,6 +42,29 @@ document
 .querySelectorAll('.btn-new')
 .forEach( btn => btn.addEventListener("click", newItem));
 
+// Display the input field for the current trick Image/Video to edit
+const editMedia = (e) =>{
+    // Create the input element
+    let uploadField = document.querySelector(".uploadField");
+    if (uploadField.classList.contains("visually-hidden"))
+    {
+        uploadField.classList.remove("visually-hidden")
+    }
+    else
+    {
+        uploadField.classList.add("visually-hidden")
+    }
+    
+}
+
+document
+.querySelectorAll('.editMedia')
+.forEach( btn => btn.addEventListener("click", editMedia));
+
+// Remove the current image from the trick Form - only possible for saved images
+document
+.querySelectorAll('.deleteMedia')
+.forEach(btn => btn.addEventListener("click", e => e.currentTarget.closest("div").remove()));
 
 // jQuery section - the loadmore button
 $(function(){

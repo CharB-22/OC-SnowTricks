@@ -64,9 +64,10 @@
                             class="embed-responsive-item" 
                             src="{{ trickVideo.vars.value.videoUrl }}">
                         </iframe>
-                        <button type="button" class="btn btn-link Media"><i class="fas fa-trash-alt"></i></button>
+                        <div class="uploadField visually-hidden" >{{form_row(trickVideo.videoUrl) }}</div>
+                        <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
                         <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i>
-                        <div class="uploadField visually-hidden" >{{form_row(trickVideo) }}</div>
+                        
                     </div>
                     {% else %}
                     <div>

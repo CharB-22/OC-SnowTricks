@@ -42,20 +42,4 @@
         {% endfor %}
         <button id="loadmore" class="btn btn-primary" aria-disabled="true">Afficher plus</button>
     </div>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-     <script>
-        $(function(){
-           $(".trick").slice(0, 4).show();
-           $("#loadmore").on("click", function(e){
-                e.preventDefault();
-                // Display more tricks when available
-                $(".trick:hidden").slice(0, 4).slideDown();
-                
-                // If no more tricks - disabled button
-                if($(".trick:hidden").length == 0) {
-                    $("#loadmore").addClass("disabled");
-                }
-           });
-       });
-     </script>
 {% endblock %}

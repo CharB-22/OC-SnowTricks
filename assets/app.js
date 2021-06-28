@@ -11,6 +11,8 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 // start the Stimulus application
 import './bootstrap';
  
+const $ = require('jquery');
+
 
 
 const newItem = (e) => {
@@ -38,3 +40,19 @@ document
 document
 .querySelectorAll('.btn-new')
 .forEach( btn => btn.addEventListener("click", newItem));
+
+
+// jQuery section - the loadmore button
+$(function(){
+    $(".trick").slice(0, 4).show();
+    $("#loadmore").on("click", function(e){
+         e.preventDefault();
+         // Display more tricks when available
+         $(".trick:hidden").slice(0, 4).slideDown();
+         
+         // If no more tricks - disabled button
+         if($(".trick:hidden").length == 0) {
+             $("#loadmore").addClass("disabled");
+         }
+    });
+});

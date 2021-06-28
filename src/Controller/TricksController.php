@@ -247,18 +247,5 @@ class TricksController extends AbstractController
         }
 
     }
-    
-    /**
-     * @Route("/tricks/delete_video/video_{id}", name="delete_trickVideo", methods={"POST", "GET"})
-     */
-    public function deleteTrickVideo(Request $request, TrickVideo $trickVideo) : Response
-    {
-            
-            // Delete it from the database
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($trickVideo);
-            $entityManager->flush();
-            
-        return $this->redirectToRoute('edit_trick', ['id' => $trickVideo->getTrick()->getId()]);
-    }    
+        
 }

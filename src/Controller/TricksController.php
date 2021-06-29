@@ -9,8 +9,8 @@ use App\Entity\TrickVideo;
 use App\Form\TrickType;
 use App\Repository\TrickImageRepository;
 use App\Repository\TrickVideoRepository;
-use App\Service\FileUploader; 
-
+use App\Service\FileUploader;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,14 +54,16 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/{slug}", name="trick_details", methods={"GET", "POST"})
      */
-    public function getTrick(Trick $trick, CommentController $commentController, Request $request) : Response
+    public function getTrick(Trick $trick, CommentController $commentController, Request $request, PaginatorInterface $paginator) : Response
     {
-
-        $user = $this->getUser();
+        $trick_id = $trick->getId();
+        $commentsData = $trick->getComments();
+        $comments = $paginator->paginate($commentsData, $request->query->getInt('page', 10), 1);
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
-            'commentForm' => $commentController->createComment($trick, $request)
+            'commentForm' => $commentController->createComment($trick, $request),
+            'comments' => $comments
         ]);
     }
 

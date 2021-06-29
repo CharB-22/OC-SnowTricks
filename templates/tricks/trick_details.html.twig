@@ -3,56 +3,48 @@
 {% block title %}{{ trick.trickName }}{% endblock %}
 
 {% block body %}
-
+    <div class="container">
         <div class="text-center">
             {% if trick.trickImages | first %}
 
                 <img
-                    class="w-50 p-2"
+                    class="img-fluid"
                     src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}"
                     alt="{{ trick.trickName }} Image"
                 />
             {% endif %}
         </div>
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner d-flex align-items-center">
-                <div class="carousel-item active d-flex   align-items-center">
-                    {% for image in trick.trickImages %}
-                        {% if not loop.first %}
-                            <img
-                                class="w-25 p-2"
-                                src="{{ asset('/uploads/' ~ image.mediaName ) }}"
-                                alt="{{ trick.trickName }} Image {{ image.id }}"
-                            />
-                        {% endif %}
-                    {% endfor %}
-                    {% for video in trick.trickVideos %}
-                            <iframe 
-                                class="embed-responsive-item" 
-                                src="{{ video.videoUrl }}">
-                            </iframe> 
-                    {% endfor %}
-                </div>
-                <button class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </button>
-                <button class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </button>
+
+        {# Mobile display of other media #}
+        <button id="moreMedia" class="btn btn-outline-primary">Afficher plus</button>
+        <div id="mobileMediaList" class="row visually-hidden">
+            {% for image in trick.trickImages %}
+                {% if not loop.first %}
+                    <img
+                        class="p-2"
+                        src="{{ asset('/uploads/' ~ image.mediaName ) }}"
+                        alt="{{ trick.trickName }} Image {{ image.id }}"
+                    />
+                {% endif %}
+            {% endfor %}
+            {% for video in trick.trickVideos %}
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe 
+                    class="embed-responsive-item" 
+                    src="{{ video.videoUrl }}">
+                </iframe> 
             </div>
+            {% endfor %}
         </div>
-
-
+    </div>
     <div class="container">
         <h1> {{ trick.trickName }} </h1>
         <p>{{ trick.trickDescription }}</p>
-        <div>
-            <span class="badge bg-primary">Auteur : {{trick.user.username }}</span>
-            <span class="badge bg-warning">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
-            <span class="badge bg-success">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
-            <span class="badge bg-danger"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
+        <div class="row">
+            <span class="badge bg-primary m-2 col-lg-2 col-xs-12">Auteur : {{trick.user.username }}</span>
+            <span class="badge bg-warning m-2 col-lg-2 col-xs-12">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
+            <span class="badge bg-success m-2 col-lg-2 col-xs-12">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
+            <span class="badge bg-danger m-2 col-lg-2 col-xs-12"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
         </div>
     </div>
     <div class="container">

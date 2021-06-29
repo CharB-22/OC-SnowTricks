@@ -21,4 +21,15 @@
     display: none;
 }
 
+#moreMedia
+{
+    display: none;
+}
 
+
+@media (max-width: 992px)
+{
+    #moreMedia, #mobileMediaList{
+        display: block;
+    }
+}

@@ -80,3 +80,21 @@ $(function(){
          }
     });
 });
+
+// Manage the media display for trick details on mobile
+const displayMedia = (e) =>{
+    let mobileCaroussel = document.getElementById("mobileMediaList");
+
+    if (mobileCaroussel.classList.contains("visually-hidden"))
+    {
+        mobileCaroussel.classList.remove("visually-hidden")
+    }
+    else
+    {
+        mobileCaroussel.classList.add("visually-hidden")
+    }
+
+}
+
+document
+.getElementById('moreMedia').addEventListener("click", displayMedia);

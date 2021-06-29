@@ -56,7 +56,6 @@ class TricksController extends AbstractController
      */
     public function getTrick(Trick $trick, CommentController $commentController, Request $request, PaginatorInterface $paginator) : Response
     {
-        $trick_id = $trick->getId();
         $commentsData = $trick->getComments();
         $comments = $paginator->paginate($commentsData, $request->query->getInt('page', 10), 1);
 

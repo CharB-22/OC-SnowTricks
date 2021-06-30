@@ -9,8 +9,8 @@ use App\Entity\TrickVideo;
 use App\Form\TrickType;
 use App\Repository\TrickImageRepository;
 use App\Repository\TrickVideoRepository;
-use App\Service\FileUploader; 
-
+use App\Service\FileUploader;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,14 +54,15 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/{slug}", name="trick_details", methods={"GET", "POST"})
      */
-    public function getTrick(Trick $trick, CommentController $commentController, Request $request) : Response
+    public function getTrick(Trick $trick, CommentController $commentController, Request $request, PaginatorInterface $paginator) : Response
     {
-
-        $user = $this->getUser();
+        $commentsData = $trick->getComments();
+        $comments = $paginator->paginate($commentsData, $request->query->getInt('page', 10), 1);
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,
-            'commentForm' => $commentController->createComment($trick, $request)
+            'commentForm' => $commentController->createComment($trick, $request),
+            'comments' => $comments
         ]);
     }
 
@@ -247,18 +248,5 @@ class TricksController extends AbstractController
         }
 
     }
-    
-    /**
-     * @Route("/tricks/delete_video/video_{id}", name="delete_trickVideo", methods={"POST", "GET"})
-     */
-    public function deleteTrickVideo(Request $request, TrickVideo $trickVideo) : Response
-    {
-            
-            // Delete it from the database
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($trickVideo);
-            $entityManager->flush();
-            
-        return $this->redirectToRoute('edit_trick', ['id' => $trickVideo->getTrick()->getId()]);
-    }    
+        
 }

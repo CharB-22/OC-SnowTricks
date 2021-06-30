@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CommentController extends AbstractController
 {
-    
+
     /**
      * @Route("/create_comment", name="create_comment", methods={"POST"})
      * You must be connected in order to leave a comment

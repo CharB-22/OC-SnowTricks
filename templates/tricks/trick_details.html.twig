@@ -8,7 +8,7 @@
             {% if trick.trickImages | first %}
 
                 <img
-                    class="w-75 p-2"
+                    class="w-50 p-2"
                     src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}"
                     alt="{{ trick.trickName }} Image"
                 />
@@ -45,20 +45,29 @@
         </div>
 
 
-
-    <h1> {{ trick.trickName }} </h1>
-    <p>{{ trick.trickDescription }}</p>
-    <div>
-        <span class="badge bg-primary">Auteur : {{trick.user.username }}</span>
-        <span class="badge bg-warning">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
-        <span class="badge bg-success">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
-        <span class="badge bg-danger"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
+    <div class="container">
+        <h1> {{ trick.trickName }} </h1>
+        <p>{{ trick.trickDescription }}</p>
+        <div>
+            <span class="badge bg-primary">Auteur : {{trick.user.username }}</span>
+            <span class="badge bg-warning">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
+            <span class="badge bg-success">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
+            <span class="badge bg-danger"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
+        </div>
     </div>
     <div class="container">
         {% if is_granted('ROLE_USER') %}
             {% include 'comment/createComment_form.html.twig' %}
         {% endif %}
-        {% for comment in trick.comments %}
+
+        {# Pagination for comments #}
+        <div class="d-flex justify-content-center">
+            {% do comments.setPageRange(2) %}
+            {{ knp_pagination_render(comments, 'comment/comment_pagination.html.twig')}}
+        </div>
+
+        {# Comments display - limit by 10 per page #}
+        {% for comment in comments %}
         <div class="mb-3 d-flew card row">
             <div class="d-flex align-items-center">
                 <div class="col-1">

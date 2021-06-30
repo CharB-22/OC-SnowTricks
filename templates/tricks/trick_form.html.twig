@@ -31,14 +31,18 @@
             data-prototype= "{{ form_widget(formTrick.trickImages.vars.prototype)|e }}"
             data-index="{{ formTrick.trickImages | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
                 {% for trickImage in formTrick.trickImages %}
-                    <div class="col">
+                    
                     {% if trickImage.vars.data.mediaName %}
+                    <div>
                         <img class="w-25" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
-                        <a href="{{ path('delete_trickImage',{'id': trickImage.vars.value.id}) }}"><i class="fas fa-trash-alt"></i></a>
-                        <p>Modifier l'image :</p>
-                        {{ form_row(trickImage.file) }}
+                        <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i></button>
+                        <div class="uploadField visually-hidden" >{{form_row(trickImage.file) }}</div>
+                    </div>
                     {% else %}
+                    <div>
                         {{form_widget(trickImage) }}
+                    </div>
                     {% endif %}
                         
                     </div>
@@ -55,19 +59,25 @@
                 {% for trickVideo in formTrick.trickVideos %}
                     <div class="col">
                     {% if trickVideo.vars.data.videoUrl %}
+                    <div>
                         <iframe 
                             class="embed-responsive-item" 
                             src="{{ trickVideo.vars.value.videoUrl }}">
                         </iframe>
-                        <a href="{{ path('delete_trickVideo',{'id': trickVideo.vars.value.id}) }}"><i class="fas fa-trash-alt"></i></a>
-                        <p>Modifier la video :</p>
-                        {{ form_row(trickVideo.videoUrl) }}
+                        <div class="uploadField visually-hidden" >{{form_row(trickVideo.videoUrl) }}</div>
+                        <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i>
+                        
+                    </div>
                     {% else %}
+                    <div>
                         {{form_widget(trickVideo) }}
+                    </div>
                     {% endif %}
                     </div>
                 {% endfor %}
         </div>
+
 
         {% if editMode %}
             <button type="submit" class="btn btn-primary m-3">Enregister les modifications</button>

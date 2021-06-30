@@ -21,8 +21,7 @@
     display: none;
 }
 
-#moreMedia
-{
+#moreMedia, #mobileMediaList{
     display: none;
 }
 

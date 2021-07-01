@@ -9,7 +9,7 @@
     {# Display "create new trick" option only if registered user #}
     {% if app.user %}
     <div class="d-grid gap-2">
-        <button class="btn btn-outline-primary m-3" href="{{ path('create_trick') }}"> Créer un nouveau Trick </button>
+        <a class="btn btn-outline-primary m-3" href="{{ path('create_trick') }}"> Créer un nouveau Trick </a>
     </div>
     {% endif %}
 

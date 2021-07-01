@@ -10,79 +10,98 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
     {% if editMode %}
     <h1> Modifier le trick </h1>
     {% else %}
     <h1> Créer un nouveau trick </h1>
     {% endif %}
-    {{ form_start(formTrick) }}
-        
-        {{ form_row(formTrick.trickName, {'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
-        
-        {{ form_row(formTrick.trickDescription, {'attr': {'placeholder': 'Renseignez la description du trick'}})}}
-        
-        {{ form_row(formTrick.trickGroup)}}
-
-
-        <button type="button" class="btn btn-link btn-new" data-collection="#trickImages">Ajouter une image <i class="fas fa-plus-circle fa-2x"></i></button>
-        <div 
-            id="trickImages" 
-            class="row" 
-            data-prototype= "{{ form_widget(formTrick.trickImages.vars.prototype)|e }}"
-            data-index="{{ formTrick.trickImages | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
-                {% for trickImage in formTrick.trickImages %}
-                    
-                    {% if trickImage.vars.data.mediaName %}
-                    <div>
-                        <img class="w-25" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
-                        <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
-                        <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i></button>
-                        <div class="uploadField visually-hidden" >{{form_row(trickImage.file) }}</div>
-                    </div>
-                    {% else %}
-                    <div>
-                        {{form_widget(trickImage) }}
-                    </div>
-                    {% endif %}
-                        
-                    </div>
-                {% endfor %}
+        {{ form_start(formTrick) }}
+        <div class="form-group my-2">
+        {{ form_row(formTrick.trickName, {'label' : 'Nom du Trick', 'attr': {'placeholder': 'Renseignez le nom du trick'}})}}
+        </div>
+        <div class="form-group my-2">
+        {{ form_row(formTrick.trickDescription, {'label' : 'Description du Trick', 'attr': {'placeholder': 'Renseignez la description du trick'}})}}
+        </div>
+        <div class="form-group my-2">
+        {{ form_row(formTrick.trickGroup, {'label' : 'Description du Trick'})}}
         </div>
 
-
-        <button type="button" class="btn btn-link btn-new" data-collection="#trickVideos">Ajouter une vidéo <i class="fas fa-plus-circle fa-2x"></i></button>
-        <div 
-            id="trickVideos" 
-            class="row" 
-            data-prototype="{{ form_widget(formTrick.trickVideos.vars.prototype)|e }}" 
-            data-index="{{ formTrick.trickVideos | length > 0 ? formTrick.trickVideos|last.vars.name + 1 : 0 }}">
-                {% for trickVideo in formTrick.trickVideos %}
-                    <div class="col">
-                    {% if trickVideo.vars.data.videoUrl %}
-                    <div>
-                        <iframe 
-                            class="embed-responsive-item" 
-                            src="{{ trickVideo.vars.value.videoUrl }}">
-                        </iframe>
-                        <div class="uploadField visually-hidden" >{{form_row(trickVideo.videoUrl) }}</div>
-                        <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
-                        <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i>
-                        
-                    </div>
-                    {% else %}
-                    <div>
-                        {{form_widget(trickVideo) }}
+        <button id="editMedia" type="button"  class="btn btn-outline-primary m-2">Modifier les medias</button>
+        <div id="editCarousel">
+            <div 
+                id="trickImages" 
+                class="row" 
+                data-prototype= "{{ form_widget(formTrick.trickImages.vars.prototype)|e }}"
+                data-index="{{ formTrick.trickImages | length > 0 ? formTrick.trickImages|last.vars.name + 1 : 0 }}">
+                    {% for trickImage in formTrick.trickImages %}
+                    <div class="col-lg-4 col-xs-12">
+                        {% if trickImage.vars.data.mediaName %}
+                        <div class="d-flex flex-column">
+                            <img class="img-fluid" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i></button>
+                            </div>
+                            <div class="uploadField visually-hidden" >{{form_row(trickImage.file) }}</div>
+                        </div>
+                        {% else %}
+                        <div>
+                        <div>
+                            {{ form_start(trickImage, {'attr' : {'class': 'form-row'}})}}
+                                {{form_row(trickImage.file)}}
+                                {{ form_row(trickImage.Supprimer)}}
+                            {{ form_end(trickImage)}}
+                        </div>
                     </div>
                     {% endif %}
-                    </div>
+                </div>    
+                {% endfor %}    
+            </div>
+            <button type="button" class="btn btn-link btn-new mt-2" data-collection="#trickImages">Ajouter une image <i class="fas fa-plus-circle fa-2x"></i></button>
+        
+            <div 
+                id="trickVideos" 
+                class="row" 
+                data-prototype="{{ form_widget(formTrick.trickVideos.vars.prototype)|e }}" 
+                data-index="{{ formTrick.trickVideos | length > 0 ? formTrick.trickVideos|last.vars.name + 1 : 0 }}">
+                    {% for trickVideo in formTrick.trickVideos %}
+                        <div class="col-lg-4 col-xs-12">
+                        {% if trickVideo.vars.data.videoUrl %}
+                        <div class="d-flex flex-column">
+                            <iframe 
+                                class="embed-responsive-item" 
+                                src="{{ trickVideo.vars.value.videoUrl }}">
+                            </iframe>
+                            <div class="uploadField visually-hidden" >{{form_row(trickVideo.videoUrl) }}</div>
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div>
+                            <div>
+                                {{ form_start(trickVideo, {'attr' : {'class': 'form-row'}})}}
+                                    {{form_row(trickVideo.videoUrl)}}
+                                    {{ form_row(trickVideo.Supprimer)}}
+                                {{ form_end(trickImage)}}
+                            </div>
+                        </div>
+                        {% endif %}
+                        </div>
                 {% endfor %}
+            </div>
+            <button type="button" class="btn btn-link btn-new mt-2" data-collection="#trickVideos">Ajouter une vidéo <i class="fas fa-plus-circle fa-2x"></i></button>
         </div>
-
-
+        <div>
         {% if editMode %}
-            <button type="submit" class="btn btn-primary m-3">Enregister les modifications</button>
+            <button type="submit" class="btn btn-outline-primary m-3">Enregister les modifications</button>
         {% else %}
-            <button type="submit" class="btn btn-primary m-3">Créer</button>
+            <button type="submit" class="btn btn-outline-primary m-3">Créer</button>
         {% endif %}
+        </div>
     {{ form_end(formTrick, { render_rest : false })}}
+    </div>
+</div>
 {% endblock %}

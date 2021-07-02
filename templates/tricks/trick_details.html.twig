@@ -8,43 +8,67 @@
             {% if trick.trickImages | first %}
 
                 <img
-                    class="img-fluid"
+                    class="img-fluid p-2"
                     src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}"
                     alt="{{ trick.trickName }} Image"
                 />
             {% endif %}
         </div>
-
-        {# Mobile display of other media #}
-        <button id="moreMedia" class="btn btn-outline-primary">Afficher plus</button>
-        <div id="mobileMediaList" class="row visually-hidden">
+        {# Desktop display of other media #}
+        <div id="desktopGallery" class="carouselDesktop d-flex row justify-content-center align-items-center">
+            <div class="desktopMediaList row">
             {% for image in trick.trickImages %}
                 {% if not loop.first %}
                     <img
-                        class="p-2"
+                        class="img-fluid p-2 col-3"
                         src="{{ asset('/uploads/' ~ image.mediaName ) }}"
                         alt="{{ trick.trickName }} Image {{ image.id }}"
                     />
                 {% endif %}
             {% endfor %}
+
             {% for video in trick.trickVideos %}
-            <div class="embed-responsive embed-responsive-21by9">
-                <iframe 
-                    class="embed-responsive-item" 
-                    src="{{ video.videoUrl }}">
-                </iframe> 
-            </div>
+                <div class="embed-responsive col-3 d-flex justify-content-center">
+                    <iframe 
+                        class="embed-responsive-item" 
+                        src="{{ video.videoUrl }}">
+                    </iframe> 
+                </div>
             {% endfor %}
+            </div>
+        </div>
+        {# Mobile display of other media #}
+        <div class="carousselMobile d-flex row justify-content-center">
+            <button id="moreMedia" class="btn btn-outline-primary m-2">Afficher plus</button>
+            <div id="mobileMediaList" class="row visually-hidden">
+                {% for image in trick.trickImages %}
+                    {% if not loop.first %}
+                        <img
+                            class="p-2"
+                            src="{{ asset('/uploads/' ~ image.mediaName ) }}"
+                            alt="{{ trick.trickName }} Image {{ image.id }}"
+                        />
+                    {% endif %}
+                {% endfor %}
+                {% for video in trick.trickVideos %}
+                <div class="embed-responsive">
+                    <iframe 
+                        class="embed-responsive-item" 
+                        src="{{ video.videoUrl }}">
+                    </iframe> 
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="container">
         <h1> {{ trick.trickName }} </h1>
         <p>{{ trick.trickDescription }}</p>
-        <div class="row">
-            <span class="badge bg-primary m-2 col-lg-2 col-xs-12">Auteur : {{trick.user.username }}</span>
-            <span class="badge bg-warning m-2 col-lg-2 col-xs-12">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
-            <span class="badge bg-success m-2 col-lg-2 col-xs-12">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
-            <span class="badge bg-danger m-2 col-lg-2 col-xs-12"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
+        <div class="row d-flex justify-content-center">
+            <span class="badge bg-primary m-2 col-lg-2 col-6">Auteur : {{trick.user.username }}</span>
+            <span class="badge bg-warning m-2 col-lg-2 col-6">Créé le : {{ trick.createdAt | date('d/m/Y') }}</span>
+            <span class="badge bg-success m-2 col-lg-2 col-6">Modifié le : {{ trick.modifiedAt | date('d/m/Y') }}</span>
+            <span class="badge bg-danger m-2 col-lg-2 col-6"> {{trick.trickGroup.groupName | default('Undefined')}} </span>
         </div>
     </div>
     <div class="container">

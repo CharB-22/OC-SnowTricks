@@ -21,14 +21,18 @@
     display: none;
 }
 
-#moreMedia, #mobileMediaList{
+#moreMedia, #mobileMediaList {
     display: none;
 }
 
 
 @media (max-width: 992px)
 {
-    #moreMedia, #mobileMediaList{
+    .desktopMediaList {
+        display: none;
+    }
+
+    #moreMedia, #mobileMediaList, #editMedia{
         display: block;
     }
 }

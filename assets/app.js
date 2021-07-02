@@ -48,11 +48,11 @@ const editMedia = (e) =>{
     let uploadField = document.querySelector(".uploadField");
     if (uploadField.classList.contains("visually-hidden"))
     {
-        uploadField.classList.remove("visually-hidden")
+        uploadField.classList.remove("visually-hidden");
     }
     else
     {
-        uploadField.classList.add("visually-hidden")
+        uploadField.classList.add("visually-hidden");
     }
     
 }
@@ -87,14 +87,15 @@ const displayMedia = (e) =>{
 
     if (mobileCaroussel.classList.contains("visually-hidden"))
     {
-        mobileCaroussel.classList.remove("visually-hidden")
+        mobileCaroussel.classList.remove("visually-hidden");
     }
     else
     {
-        mobileCaroussel.classList.add("visually-hidden")
+        mobileCaroussel.classList.add("visually-hidden");
     }
 
 }
 
 document
 .getElementById('moreMedia').addEventListener("click", displayMedia);
+

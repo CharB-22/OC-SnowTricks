@@ -32,7 +32,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * 
+     * @Assert\NotNull(message = "Veuillez renseigner un nom d'utilisateur.")
+     * @Assert\Length(min= 5,
+     *                minMessage = "Votre nom d'utilisateur doit avoir minimum 5 caractères.")
      * )
      */
     private $username;
@@ -45,8 +47,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Length(min=8,
-     * minMessage="Votre mot de passe doit au moins faire 8 caractères.")
      */
     private $password;
 

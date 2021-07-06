@@ -9,3 +9,30 @@
 .intro-text {
     text-align: center;
 }
+
+.card-img-top {
+    width: 100%;
+    height:25vh;
+}
+.card:hover {
+    box-shadow: 0 0 1em grey;
+}
+.trick {
+    display: none;
+}
+
+#moreMedia, #mobileMediaList {
+    display: none;
+}
+
+
+@media (max-width: 992px)
+{
+    .desktopMediaList {
+        display: none;
+    }
+
+    #moreMedia, #mobileMediaList, #editMedia{
+        display: block;
+    }
+}

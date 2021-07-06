@@ -8,35 +8,40 @@
         <div class="row intro-text">
                 <h1>SnowTricks</h1>
                 <h3>Le site communautaire pour les passionnés de Snowboard !</h5>
-                <a href="#snowTrickList" class="link-dark"><i class="fas fa-arrow-circle-down fa-3x"></i></a>
+                <a href="#snowTrickList" class="link-dark left"><i class="fas fa-arrow-circle-down fa-5x"></i></a>
         </div>
     </header>
-    <div class="container">
+    <div class="container mt-3">
+
         <div id="snowTrickList" class="row trickRow">
+
         {% for trick in trickList %}
             <div class="col-lg-3 col-xs-12">
-                <div class="card-body trick" style="display:none;">
-                    {% if trick.trickImages | first %}
-                        <img class="card-img-top" src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}" />
-                    {% else %}
-                        <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
-                    {% endif %}
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <a href="{{ path('trick_details',{'slug': trick.slug}) }}" >{{ trick.trickName }}</a>
-                        {% if is_granted('TRICK_MANAGE', trick) or is_granted('ROLE_ADMIN')%}
-                        <div class="d-flex">
-                            <a href="{{ path('edit_trick',{'id': trick.id}) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>
-                            <form method="post" action="{{ path('delete_trick', {'id': trick.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                                <button class="btn btn-link"><i class="fas fa-trash-alt"></i></button>
-                            </form>
-                        </div>
+                <div class="card">
+                    <div class="trickHome card-body rounded">
+                        {% if trick.trickImages | first %}
+                            <img class="card-img-top" src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}" />
+                        {% else %}
+                            <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
                         {% endif %}
+                        <div class="card-text d-flex justify-content-between align-items-center p-2">
+                            <a href="{{ path('trick_details',{'slug': trick.slug}) }}" class="btn btn-outline-primary display-5">{{ trick.trickName }}</a>
+                            {% if is_granted('TRICK_MANAGE', trick) or is_granted('ROLE_ADMIN')%}
+                            <div class="d-flex">
+                                <a href="{{ path('edit_trick',{'id': trick.id}) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>
+                                <form method="post" action="{{ path('delete_trick', {'id': trick.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                    <button class="btn btn-link"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-            <button id="loadmore" class="btn btn-info d-block" aria-disabled="true">Afficher plus</button>
+        {% endfor %}
+        
+        <button id="loadmore" class="btn btn-outline-primary my-3" aria-disabled="true">Afficher plus</button>
         </div>
     </div>
 

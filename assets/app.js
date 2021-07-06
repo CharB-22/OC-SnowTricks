@@ -55,7 +55,7 @@ const editMedia = (e) => {
         uploadField.classList.add("visually-hidden");
     }
     
-}
+};
 
 document
 .querySelectorAll(".editMedia")

@@ -30,20 +30,19 @@
   display: none;
 }
 
-#moreMedia, 
+#moreMedia,
 #mobileMediaList {
   display: none;
 }
 
-@media (max-width: 992px)
-{
-    .desktopMediaList {
+@media (max-width: 992px) {
+  .desktopMediaList {
       display: none;
     }
 
-    #moreMedia, 
-    #mobileMediaList, 
-    #editMedia {
+  #moreMedia,
+  #mobileMediaList,
+  #editMedia {
       display: block;
     }
 }

@@ -63,8 +63,8 @@ document
 
 // Remove the current image from the trick Form - only possible for saved images
 document
-.querySelectorAll('.deleteMedia')
-.forEach((btn) => btn.addEventListener("click", e => e.currentTarget.closest("div").remove()));
+.querySelectorAll(".deleteMedia")
+.forEach((btn) => btn.addEventListener("click", e  => e.currentTarget.closest("div").remove()));
 
 // jQuery section - the loadmore button
 $(function(){

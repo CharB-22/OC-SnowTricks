@@ -17,12 +17,13 @@ class TrickVideoType extends AbstractType
             ->add('videoUrl', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Url de la vidéo'
+                    'class' => 'my-2',
+                    'placeholder' => 'Lien youtube de la vidéo'
                 ],
                 'required' => false,
             ])
-            ->add('Delete', ButtonType::class, [
-                'attr' => ['class' => 'btn btn-remove'],
+            ->add('Supprimer', ButtonType::class, [
+                'attr' => ['class' => 'btn btn-outline-danger btn-remove'],
             ]);
         ;
     }

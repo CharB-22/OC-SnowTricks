@@ -58,7 +58,7 @@ class Trick
     private $trickGroup;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Trick", cascade={"persist"}, orphanRemoval=true)
      */
     private $comments;
 

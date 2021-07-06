@@ -17,6 +17,7 @@ class TrickImageType extends AbstractType
         $builder
             ->add('file', FileType::class, [
                 'label' => false,
+                'attr' => ['class' => 'my-2'],
                 'required' => false,
                 'constraints' => [
                     new File([
@@ -29,8 +30,8 @@ class TrickImageType extends AbstractType
                     ])
                 ],
             ])
-            ->add('Delete', ButtonType::class, [
-                'attr' => ['class' => 'btn btn-remove'],
+            ->add('Supprimer', ButtonType::class, [
+                'attr' => ['class' => 'btn btn-outline-danger btn-remove'], 
             ]);
         ;
     }

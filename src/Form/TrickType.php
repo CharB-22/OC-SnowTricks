@@ -17,11 +17,14 @@ class TrickType extends AbstractType
         $builder
             ->add('trickName', null, [
                 'required' => false,
+                'label' => false
             ]) 
             ->add('trickDescription', null, [
+                'label' => false,
                 'required' => false,
             ])
             ->add('trickGroup', EntityType::class, [
+                'label' => false,
                 'class' => TrickGroup::class,
                 'choice_label' => 'groupName'
             ])

@@ -1,5 +1,5 @@
 
             {{ form_start(commentForm) }}
-                {{ form_row(commentForm.commentContent, { 'label' : 'Votre commentaire', 'attr' : {'placeholder' : 'Laissez votre commentaire'}}) }}
-                <button type="submit" class="btn btn-warning">Envoyer</button>
+                {{ form_row(commentForm.commentContent, { 'label' : 'Laisser un commentaire', 'attr' : {'placeholder' : 'Tapez votre message', 'class': 'my-2'}}) }}
+                <button type="submit" class="btn btn-outline-warning">Envoyer</button>
             {{ form_end(commentForm) }}

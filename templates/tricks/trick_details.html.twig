@@ -74,12 +74,17 @@
     <div class="container">
         {% if is_granted('ROLE_USER') %}
             {% include 'comment/createComment_form.html.twig' %}
+        {% else %}
+        <h5 class="my-3">Pour laisser un commentaire, <a href="{{ path('app_login')}}">connectez-vous</a> ou <a href="{{ path('app_login') }}">créez un compte</a></h5>
         {% endif %}
 
         {# Pagination for comments #}
-        <div class="d-flex justify-content-center">
-            {% do comments.setPageRange(2) %}
-            {{ knp_pagination_render(comments, 'comment/comment_pagination.html.twig')}}
+        <div>
+            <h3 class="display-6">Vos commentaires : </h3>
+            <div class="d-flex justify-content-center">
+                {% do comments.setPageRange(2) %}
+                {{ knp_pagination_render(comments, 'comment/comment_pagination.html.twig')}}
+            </div>
         </div>
 
         {# Comments display - limit by 10 per page #}

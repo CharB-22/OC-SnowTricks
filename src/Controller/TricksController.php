@@ -57,7 +57,7 @@ class TricksController extends AbstractController
     public function getTrick(Trick $trick, CommentController $commentController, Request $request, PaginatorInterface $paginator) : Response
     {
         $commentsData = $trick->getComments();
-        $comments = $paginator->paginate($commentsData, $request->query->getInt('page', 10), 1);
+        $comments = $paginator->paginate($commentsData, $request->query->getInt('page', 1), 8);
 
         return $this->render('tricks/trick_details.html.twig', [
             'trick' => $trick,

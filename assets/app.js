@@ -6,12 +6,12 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.scss';
-import { Tooltip, Toast, Popover } from 'bootstrap';
+import "./styles/app.scss";
+import { Tooltip, Toast, Popover } from "bootstrap";
 // start the Stimulus application
-import './bootstrap';
+import "./bootstrap";
  
-const $ = require('jquery');
+const $ = require("jquery");
 
 
 // Generate embedded forms for Image and video collection
@@ -27,23 +27,23 @@ const newItem = (e) => {
         collectionHolder.dataset.index
     );
 
-    item.querySelector('.btn-remove').addEventListener("click", () => item.remove());
+    item.querySelector(".btn-remove").addEventListener("click", () => item.remove());
     
     collectionHolder.appendChild(item);
     collectionHolder.dataset.index++;
-}
+};
 
 
 document
-.querySelectorAll('.btn-remove')
-.forEach(btn => btn.addEventListener("click", e => e.currentTarget.closest("col").remove()));
+.querySelectorAll(".btn-remove")
+.forEach((btn) => btn.addEventListener("click", e => e.currentTarget.closest("col").remove()));
 
 document
-.querySelectorAll('.btn-new')
-.forEach( btn => btn.addEventListener("click", newItem));
+.querySelectorAll(".btn-new")
+.forEach( (btn) => btn.addEventListener("click", newItem));
 
 // Display the input field for the current trick Image/Video to edit
-const editMedia = (e) =>{
+const editMedia = (e) => {
     // Create the input element
     let uploadField = document.querySelector(".uploadField");
     if (uploadField.classList.contains("visually-hidden"))
@@ -58,13 +58,13 @@ const editMedia = (e) =>{
 }
 
 document
-.querySelectorAll('.editMedia')
-.forEach( btn => btn.addEventListener("click", editMedia));
+.querySelectorAll(".editMedia")
+.forEach( (btn) => btn.addEventListener("click", editMedia));
 
 // Remove the current image from the trick Form - only possible for saved images
 document
 .querySelectorAll('.deleteMedia')
-.forEach(btn => btn.addEventListener("click", e => e.currentTarget.closest("div").remove()));
+.forEach((btn) => btn.addEventListener("click", e => e.currentTarget.closest("div").remove()));
 
 // jQuery section - the loadmore button
 $(function(){
@@ -75,14 +75,14 @@ $(function(){
          $(".trick:hidden").slice(0, 4).slideDown();
          
          // If no more tricks - disabled button
-         if($(".trick:hidden").length == 0) {
+         if($(".trick:hidden").length === 0) {
              $("#loadmore").addClass("disabled");
          }
     });
 });
 
 // Manage the media display for trick details on mobile
-const displayMedia = (e) =>{
+const displayMedia = (e) => {
     let mobileCaroussel = document.getElementById("mobileMediaList");
 
     if (mobileCaroussel.classList.contains("visually-hidden"))
@@ -97,5 +97,5 @@ const displayMedia = (e) =>{
 }
 
 document
-.getElementById('moreMedia').addEventListener("click", displayMedia);
+.getElementById("moreMedia").addEventListener("click", displayMedia);
 

@@ -17,12 +17,12 @@
 
         {% for trick in trickList %}
             <div class="col-lg-3 col-xs-12">
-                <div class="card">
-                    <div class="trickHome card-body rounded">
+                <div class="card w-100 m-2">
+                    <div class="trick card-body rounded">
                         {% if trick.trickImages | first %}
-                            <img class="card-img-top" src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}" />
+                            <img class="card-image p-2" src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}" />
                         {% else %}
-                            <img class="card-img-top" src="https://tse2.mm.bing.net/th?id=OIP.Dxw8muUlY2lD2l-XxnSc9QHaEo&pid=Api"/>
+                            <img class="card-image p-2" src="{{ asset('/uploads/placeholder.png' ) }}"/>
                         {% endif %}
                         <div class="card-text d-flex justify-content-between align-items-center p-2">
                             <a href="{{ path('trick_details',{'slug': trick.slug}) }}" class="btn btn-outline-primary display-5">{{ trick.trickName }}</a>

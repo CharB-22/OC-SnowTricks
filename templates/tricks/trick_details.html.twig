@@ -8,7 +8,7 @@
             {% if trick.trickImages | first %}
 
                 <img
-                    class="img-fluid p-2"
+                    class="image-top p-2"
                     src="{{ asset('/uploads/' ~  trick.trickImages | first .mediaName ) }}"
                     alt="{{ trick.trickName }} Image"
                 />

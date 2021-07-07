@@ -76,13 +76,13 @@ class TrickFixtures extends Fixture
     $manager->persist($trickImage); 
 
     $trickImage = new TrickImage();
-    $trickImage->setMediaName('indy-grab-2-60d8a0ceab72d.jpg')
+    $trickImage->setMediaName('indy-grab-2.jpg')
                 ->setTrick($trick);
     
     $manager->persist($trickImage); 
 
     $trickImage = new TrickImage();
-    $trickImage->setMediaName('indy-grab-3-60dd75f9d7acc.jpg')
+    $trickImage->setMediaName('indy-grab-3.jpg')
                 ->setTrick($trick);
     
     $manager->persist($trickImage);

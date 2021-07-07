@@ -70,19 +70,19 @@ class TrickFixtures extends Fixture
 
     // Create trick Images for trick Indy
     $trickImage = new TrickImage();
-    $trickImage->setMediaName('indy-grab-1-60d8a0ceaa8d9.jpg')
+    $trickImage->setMediaName('indy-grab-1.jpg')
                 ->setTrick($trick);
     
     $manager->persist($trickImage); 
 
     $trickImage = new TrickImage();
-    $trickImage->setMediaName('indy-grab-2-60d8a0ceab72d.jpg')
+    $trickImage->setMediaName('indy-grab-2.jpg')
                 ->setTrick($trick);
     
     $manager->persist($trickImage); 
 
     $trickImage = new TrickImage();
-    $trickImage->setMediaName('indy-grab-3-60dd75f9d7acc.jpg')
+    $trickImage->setMediaName('indy-grab-3.jpg')
                 ->setTrick($trick);
     
     $manager->persist($trickImage);
@@ -96,7 +96,7 @@ class TrickFixtures extends Fixture
     $manager->persist($trickVideo); 
 
     // Create the trick Comments
-    for ($i = 0; $i< 10; $i++)
+    for ($i = 0; $i< 13; $i++)
     {
         $comment = new Comment();
         

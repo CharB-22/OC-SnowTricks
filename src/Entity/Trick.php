@@ -59,6 +59,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Trick", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"commentDate" = "DESC"})
      */
     private $comments;
 

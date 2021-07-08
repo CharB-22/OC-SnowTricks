@@ -64,6 +64,11 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('confirmPassword', PasswordType::class, [
                 'label' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez confirmez votre mot de passe.',
+                    ]),
+                ],
             ])
         ;
     }

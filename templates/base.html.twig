@@ -53,7 +53,7 @@
         </nav>
         {% for label, messages in app.flashes(['success', 'warning', 'danger']) %}
             {% for message in messages %}
-                <div class="alert alert-{{ label }}">
+                <div class="alert alert-{{ label }} m-0">
                     {{ message }}
                 </div>
             {% endfor %}

@@ -26,6 +26,10 @@
   box-shadow: 0 0 1em grey;
 }
 
+.comment-card:hover {
+  box-shadow: none;
+}
+
 .trick {
   display: none;
 }

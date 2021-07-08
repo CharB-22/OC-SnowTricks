@@ -89,10 +89,10 @@
 
         {# Comments display - limit by 10 per page #}
         {% for comment in comments %}
-        <div class="mb-3 d-flew card row">
+        <div class="mb-3 d-flew card comment-card row">
             <div class="d-flex align-items-center">
                 <div class="col-1">
-                    <img  class="img-fluid d-flex justify-content-center" style="max-width: 50px;" src="{{ asset('/uploads/' ~ comment.user.profilePicture ) }}"  alt="image profile de {{comment.user.username}}"/>
+                    <img  class="img-fluid d-flex justify-content-center align-items-center" style="max-width: 50px;" src="{{ asset('/uploads/' ~ comment.user.profilePicture ) }}"  alt="image profile de {{comment.user.username}}"/>
                 </div>
                 <div class="col-10">
                     <h5 class="card-title"><p class="text-secondary">{{ comment.user.username }}</p></h5>

@@ -7,10 +7,10 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
     <div class="container">
-        <h1 class="mb-3">Réinitialiser votre mot de passe</h1>
+        <h1 class="h3 my-3 font-weight-normal">Réinitialiser votre mot de passe</h1>
 
         {{ form_start(requestForm) }}
-            <div class="form-group">
+            <div class="form-group  mb-2">
                 {{ form_row(requestForm.email) }}
                 <div>
                     <small>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-        <button class="btn btn-outline-primary my-3">Envoyer l'email de réinitialisation</button>
+        <button class="btn btn-outline-primary my-2">Envoyer l'email de réinitialisation</button>
         {{ form_end(requestForm) }}
     </div>
 {% endblock %}

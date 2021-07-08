@@ -30,7 +30,8 @@ class UserFixtures extends Fixture
                 'SuperAdmin'))
             ->setEmail('superAdmin@gmail.com')
             ->setRoles(['ROLE_ADMIN', 'ROLE_USER'])
-            ->setProfilePicture('profile_avatar_testeur.jpg');
+            ->setProfilePicture('profile_avatar_testeur.jpg')
+            ->setIsVerified(true);
 
         $manager->persist($user);
 

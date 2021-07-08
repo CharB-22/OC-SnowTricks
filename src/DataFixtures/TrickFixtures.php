@@ -36,7 +36,8 @@ class TrickFixtures extends Fixture
             ->setPassword($faker->password())
             ->setEmail($faker->email())
             ->setRoles(['ROLE_USER'])
-            ->setProfilePicture('placeholder_profile.png');
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
 
         array_push($users, $user);
         $manager->persist($user);
@@ -49,7 +50,8 @@ class TrickFixtures extends Fixture
         ->setPassword($faker->password())
         ->setEmail($faker->email())
         ->setRoles(['ROLE_USER'])
-        ->setProfilePicture('placeholder_profile.png');
+        ->setProfilePicture('placeholder_profile.png')
+        ->setIsVerified(true);
     
     $manager->persist($user);
     
@@ -118,7 +120,8 @@ class TrickFixtures extends Fixture
         ->setPassword($faker->password())
         ->setEmail($faker->email())
         ->setRoles(['ROLE_USER'])
-        ->setProfilePicture('placeholder_profile.png');
+        ->setProfilePicture('placeholder_profile.png')
+        ->setIsVerified(true);
         
     $manager->persist($user);
 
@@ -183,7 +186,8 @@ class TrickFixtures extends Fixture
             ->setPassword($faker->password())
             ->setEmail($faker->email())
             ->setRoles(['ROLE_USER'])
-            ->setProfilePicture('placeholder_profile.png');
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
             
         $manager->persist($user);
     
@@ -241,7 +245,8 @@ class TrickFixtures extends Fixture
             ->setPassword($faker->password())
             ->setEmail($faker->email())
             ->setRoles(['ROLE_USER'])
-            ->setProfilePicture('placeholder_profile.png');
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
             
         $manager->persist($user);
     
@@ -305,7 +310,8 @@ class TrickFixtures extends Fixture
             ->setPassword($faker->password())
             ->setEmail($faker->email())
             ->setRoles(['ROLE_USER'])
-            ->setProfilePicture('placeholder_profile.png');
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
             
         $manager->persist($user);
     
@@ -376,7 +382,8 @@ class TrickFixtures extends Fixture
             ->setPassword($faker->password())
             ->setEmail($faker->email())
             ->setRoles(['ROLE_USER'])
-            ->setProfilePicture('placeholder_profile.png');
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
             
         $manager->persist($user);
     

@@ -11,6 +11,10 @@
     <div class="d-grid gap-2">
         <a class="btn btn-outline-primary m-3" href="{{ path('create_trick') }}"> Créer un nouveau Trick </a>
     </div>
+    {% else %}
+
+     <h5 class="my-3">Vous souhaitez ajouter un Trick ? <a href="{{ path('app_login')}}">Connectez-vous</a> ou <a href="{{ path('app_register')}}">inscrivez-vous</a> à notre communauté.</h5>
+
     {% endif %}
 
     <div class="row">

@@ -248,5 +248,15 @@ class TricksController extends AbstractController
         }
 
     }
-        
+    
+    /**
+     * @Route("/mentions_legales", name="mentions_legales", methods={"GET"})
+     */
+
+     public function getLegal() : Response
+     {
+        return $this->render('legales-mentions.html.twig', [
+            'title' => 'Mentions Légales',
+        ]);
+     }
 }

@@ -94,7 +94,7 @@ const displayMedia = (e) => {
         mobileCaroussel.classList.add("visually-hidden");
     }
 
-}
+};
 
 document
 .getElementById("moreMedia").addEventListener("click", displayMedia);

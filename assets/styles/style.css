@@ -45,12 +45,12 @@
 
 @media (max-width: 992px) {
   .desktopMediaList {
-  display: none;
+    display: none;
   }
 
   #moreMedia,
   #mobileMediaList,
   #editMedia {
     display: block;
-    }
+      }
 }

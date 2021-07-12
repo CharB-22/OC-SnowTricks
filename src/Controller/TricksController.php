@@ -153,8 +153,6 @@ class TricksController extends AbstractController
             
             // Fill the trick Information
             $trick->setModifiedAt(new \DateTime());
-            $trick->setUser($user);
-
 
           // Get the uploaded images
 

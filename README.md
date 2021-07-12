@@ -22,6 +22,7 @@ Lien vers analyse Codacy :
   * Symfony 5.2.9
   * Bootstrap v5.0.0
   * FontAwesome v5.15.3
+  * Webpack Encore v5.38.1
 
 ## Set Up
   * Clone or download the github project

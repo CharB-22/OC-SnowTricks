@@ -1,11 +1,8 @@
 # Bienvenue sur le site Communautaire SnowTricks
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7528ea2e702546bfb2cb53cc6bfdfb9e)](https://app.codacy.com/gh/CharB-22/OC-SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=CharB-22/OC-SnowTricks&utm_campaign=Badge_Grade_Settings)
+Lien vers analyse Codacy : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7528ea2e702546bfb2cb53cc6bfdfb9e)](https://app.codacy.com/gh/CharB-22/OC-SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=CharB-22/OC-SnowTricks&utm_campaign=Badge_Grade_Settings)
 
 Collaborating website using Symfony to build the entire application. For more information go to : https://openclassrooms.com/fr/paths/59/projects/42/assignment
-
-Lien vers analyse Codacy :
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b8f36c07e12d45df86bd854ea4d3e3a2)](https://www.codacy.com/gh/CharB-22/OC-SnowTricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CharB-22/OC-SnowTricks&amp;utm_campaign=Badge_Grade)
 
 ## Tables of Contents
   * [Repository Content](#repository-content)

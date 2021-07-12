@@ -39,10 +39,10 @@
                         {% if trickImage.vars.data.mediaName %}
                         <div class="d-flex flex-column">
                             <img class="img-fluid" src={{ asset('/uploads/' ~ trickImage.vars.value.mediaName ) }}>
-                            <div class="d-flex justify-content-end">
+                            <span class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-link deleteMedia"><i class="fas fa-trash-alt"></i></button>
                                 <button type="button" class="btn btn-link editMedia"><i class="fas fa-edit"></i></button>
-                            </div>
+                            </span>
                             <div class="uploadField visually-hidden" >{{form_row(trickImage.file) }}</div>
                         </div>
                         {% else %}

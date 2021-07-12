@@ -159,7 +159,6 @@ class TricksController extends AbstractController
           // Get the uploaded images
 
             $newImages = $form['trickImages']->getData();
-            
             $this->deleteTrickImage($trickImages, $newImages);
             
             // Manage images - former images AND new images
@@ -220,7 +219,7 @@ class TricksController extends AbstractController
         {
             $currentName = $image->getMediaName();
             $saveImage = false;
-            
+        
             // Compare the batch of images submit with the form with the trick Images already saved.
             foreach($newImages as $currentNewImages)
             {
@@ -228,8 +227,9 @@ class TricksController extends AbstractController
                 if($currentName == $currentNewImages->getMediaName())
                 {
                     $saveImage = true;
-                    break;
+                    //break;
                 }
+                
             }
 
             //If we can't find the old trick Images in the new batch - we need to delete it.
@@ -238,8 +238,8 @@ class TricksController extends AbstractController
                 // Get the name of the old image to delete
                 $imageName = $image->getMediaName();
                 unlink($this->getParameter('images_directory'). '/' . $imageName);
-
                 // Delete it from the database
+                
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($image);
                 $entityManager->flush();

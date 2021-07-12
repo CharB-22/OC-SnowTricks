@@ -1,9 +1,8 @@
 # Bienvenue sur le site Communautaire SnowTricks
 
-Collaborating website using Symfony to build the entire application. For more information go to : https://openclassrooms.com/fr/paths/59/projects/42/assignment
+Lien vers analyse Codacy : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7528ea2e702546bfb2cb53cc6bfdfb9e)](https://app.codacy.com/gh/CharB-22/OC-SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=CharB-22/OC-SnowTricks&utm_campaign=Badge_Grade_Settings)
 
-Lien vers analyse Codacy :
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b8f36c07e12d45df86bd854ea4d3e3a2)](https://www.codacy.com/gh/CharB-22/OC-SnowTricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CharB-22/OC-SnowTricks&amp;utm_campaign=Badge_Grade)
+Collaborating website showcasing Snowboard Tricks for all Snowboard fans out there. Using Symfony to build the entire application. For more information go to : https://openclassrooms.com/fr/paths/59/projects/42/assignment
 
 ## Tables of Contents
   * [Repository Content](#repository-content)
@@ -20,6 +19,7 @@ Lien vers analyse Codacy :
   * Symfony 5.2.9
   * Bootstrap v5.0.0
   * FontAwesome v5.15.3
+  * Webpack Encore v5.38.1
 
 ## Set Up
   * Clone or download the github project

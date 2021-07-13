@@ -58,17 +58,18 @@ class TrickFixtures extends Fixture
     // Create the trick Core
     $trick = new Trick();
     $trickGroup = new TrickGroup();
-    
+    $trickGroup = $trickGroup->setGroupName($trickGroups[0]);
+
     $trick->setTrickName('Indy')
         ->setTrickDescription('Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière.')
         ->setCreatedAt($faker->dateTimeBetween('-2 months'))
         ->setModifiedAt($faker->dateTimeBetween('-1 months'))
-        ->setTrickGroup($trickGroup->setGroupName($trickGroups[0]))
+        ->setTrickGroup($trickGroup)
         ->setUser($user)
         ->setSlug('indy');
         
     $manager->persist($trick);
-    $manager->persist($trickGroup);
+
 
     // Create trick Images for trick Indy
     $trickImage = new TrickImage();
@@ -110,6 +111,143 @@ class TrickFixtures extends Fixture
 
         $manager->persist($comment);
     }
+
+            // Create trick n°10 - Truck Driver
+
+        // Create the user
+        $user = new User();
+            
+        $user->setUsername($faker->userName())
+            ->setPassword($faker->password())
+            ->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
+            
+        $manager->persist($user);
+    
+        // Create the trick Core
+        $trick = new Trick();
+            
+        $trick->setTrickName('Truck Driver')
+            ->setTrickDescription("Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.")
+            ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+            ->setModifiedAt($faker->dateTimeBetween('-1 months'))
+            ->setTrickGroup($trickGroup)
+            ->setUser($user)
+            ->setSlug('truck_driver');
+                
+        $manager->persist($trick);
+    
+            // Add the images for Rotation
+        $trickImage = new TrickImage();
+        $trickImage->setMediaName('placeholder.png')
+                    ->setTrick($trick);
+            
+        $manager->persist($trickImage);
+
+        // Create trick n°7 - SeatBelt
+
+        // Create the user
+        $user = new User();
+            
+        $user->setUsername($faker->userName())
+            ->setPassword($faker->password())
+            ->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
+            
+        $manager->persist($user);
+    
+            // Create the trick Core
+        $trick = new Trick();
+            
+        $trick->setTrickName('SeatBelt')
+            ->setTrickDescription("Saisie du carre frontside à l'arrière avec la main avant.")
+            ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+            ->setModifiedAt($faker->dateTimeBetween('-1 months'))
+            ->setTrickGroup($trickGroup)
+            ->setUser($user)
+            ->setSlug('seatbelt');
+                
+        $manager->persist($trick);
+    
+            // Add the images for Rotation
+        $trickImage = new TrickImage();
+        $trickImage->setMediaName('placeholder.png')
+                    ->setTrick($trick);
+            
+        $manager->persist($trickImage);
+        
+        // Create trick n°8 - Nose Grab
+
+        // Create the user
+        $user = new User();
+            
+        $user->setUsername($faker->userName())
+            ->setPassword($faker->password())
+            ->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
+            
+        $manager->persist($user);
+    
+            // Create the trick Core
+        $trick = new Trick();
+            
+        $trick->setTrickName('Nose Grab')
+            ->setTrickDescription("Saisie de la partie avant de la planche, avec la main avant.")
+            ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+            ->setModifiedAt($faker->dateTimeBetween('-1 months'))
+            ->setTrickGroup($trickGroup)
+            ->setUser($user)
+            ->setSlug('nose_grab');
+                
+        $manager->persist($trick);
+        $manager->persist($trickGroup);
+    
+            // Add the images for Rotation
+        $trickImage = new TrickImage();
+        $trickImage->setMediaName('placeholder.png')
+                    ->setTrick($trick);
+            
+        $manager->persist($trickImage);
+
+        // Create trick n°9 - Mute
+
+        // Create the user
+        $user = new User();
+            
+        $user->setUsername($faker->userName())
+            ->setPassword($faker->password())
+            ->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setProfilePicture('placeholder_profile.png')
+            ->setIsVerified(true);
+            
+        $manager->persist($user);
+    
+            // Create the trick Core
+        $trick = new Trick();
+            
+        $trick->setTrickName('Mute')
+            ->setTrickDescription("Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.")
+            ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+            ->setModifiedAt($faker->dateTimeBetween('-1 months'))
+            ->setTrickGroup($trickGroup)
+            ->setUser($user)
+            ->setSlug('mute');
+                
+        $manager->persist($trick);
+    
+            // Add the images for Rotation
+        $trickImage = new TrickImage();
+        $trickImage->setMediaName('placeholder.png')
+                    ->setTrick($trick);
+            
+        $manager->persist($trickImage);
 
     // Create trick n°2 - Rotations
 
@@ -213,7 +351,7 @@ class TrickFixtures extends Fixture
             
         $manager->persist($trickImage); 
     
-    
+            
             // Add TrickVideos for Rotations
         $trickVideo = new TrickVideo();
     
@@ -325,7 +463,7 @@ class TrickFixtures extends Fixture
             ->setModifiedAt($faker->dateTimeBetween('-1 months'))
             ->setTrickGroup($trickGroup->setGroupName($trickGroups[4]))
             ->setUser($user)
-            ->setSlug('corkscrew');
+            ->setSlug('tail_slide');
                 
         $manager->persist($trick);
         $manager->persist($trickGroup);
@@ -409,8 +547,7 @@ class TrickFixtures extends Fixture
             
         $manager->persist($trickImage); 
 
-        
- 
+
     // Push all the fixtures to the database
     $manager->flush();
     }

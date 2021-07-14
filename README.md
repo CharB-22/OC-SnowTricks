@@ -8,6 +8,7 @@ Collaborating website showcasing Snowboard Tricks for all Snowboard fans out the
   * [Repository Content](#repository-content)
   * [Technologies](#technologies)
   * [Set Up](#set-up)
+  * [Live Website](#live-website)
 
 ## Repository content
   * The application pages and folders needed to run the application
@@ -57,3 +58,7 @@ Collaborating website showcasing Snowboard Tricks for all Snowboard fans out the
 In order to test the application and all its features, a super user has been created in the fixtures. In order to connect using this credentials:
   * Username : SuperAdmin
   * Password : SuperAdmin
+
+## Set Up
+
+You can see the final demo website on this live URL : https://snowtricks-community.herokuapp.com/

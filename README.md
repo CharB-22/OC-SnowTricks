@@ -1,6 +1,6 @@
-# Bienvenue sur le site Communautaire SnowTricks
+# Welcome to the SnowTricks community website
 
-Lien vers analyse Codacy : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7528ea2e702546bfb2cb53cc6bfdfb9e)](https://app.codacy.com/gh/CharB-22/OC-SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=CharB-22/OC-SnowTricks&utm_campaign=Badge_Grade_Settings)
+Codacy's analysis : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7528ea2e702546bfb2cb53cc6bfdfb9e)](https://app.codacy.com/gh/CharB-22/OC-SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=CharB-22/OC-SnowTricks&utm_campaign=Badge_Grade_Settings)
 
 Collaborating website showcasing Snowboard Tricks for all Snowboard fans out there. Using Symfony to build the entire application. For more information go to : https://openclassrooms.com/fr/paths/59/projects/42/assignment
 
@@ -59,6 +59,6 @@ In order to test the application and all its features, a super user has been cre
   * Username : SuperAdmin
   * Password : SuperAdmin
 
-## Set Up
+## Live website
 
 You can see the final demo website on this live URL : https://snowtricks-community.herokuapp.com/

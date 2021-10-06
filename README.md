@@ -60,5 +60,4 @@ In order to test the application and all its features, a super user has been cre
   * Password : SuperAdmin
 
 ## Live website
-
-You can see the final demo website on this live URL : https://snowtricks-community.herokuapp.com/
+Under review - available soon

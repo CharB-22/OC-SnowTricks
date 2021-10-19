@@ -44,7 +44,7 @@ Collaborating website showcasing Snowboard Tricks for all Snowboard fans out the
   ```
   * Import the structure of the database thanks to the migrations in the project :
   ```
-  php bin/console doctrine:database:create
+  php bin/console doctrine:migrations:migrate
   ```
   * Populate the database with the datas used to test
   ```
@@ -60,4 +60,13 @@ In order to test the application and all its features, a super user has been cre
   * Password : SuperAdmin
 
 ## Live website
-Under review - available soon
+
+You can access to a live demo for this project :
+http://snowtricks-community.herokuapp.com/
+
+To note, in order to accomodate with Heroku restrictions, images uploaded will disappear, so placeholder images have been created.
+Also, the "verify your email" option has been disabled for the live version.
+
+The super admin credentials are the one below:
+* Username : SuperAdmin
+* Password : superAdmin
